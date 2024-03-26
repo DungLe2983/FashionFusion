@@ -1,9 +1,13 @@
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import Hero from './components/layout/Hero';
+import SectionHeader from './components/layout/SectionHeader';
 
 export default function Home() {
-  return (
-    <div>
-      Home
-    </div>
-  );
+    return (
+        <div>
+            <Hero />
+            <SectionHeader url={'/'} subHeader={'New Arrivals'} />
+        </div>
+    );
 }
