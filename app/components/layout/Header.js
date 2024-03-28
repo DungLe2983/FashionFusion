@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -15,29 +16,29 @@ const Header = () => {
                 <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
                     <a
                         href='/'
-                        className='flex items-center space-x-3 rtl:space-x-reverse'
+                        className='flex items-center  rtl:space-x-reverse'
                     >
-                        <Image
+                        <img
                             src={'/logo.png'}
-                            width={60}
-                            height={60}
+                            className=' w-10 h-10 md:w-20 md:h-20'
                             alt='Flowbite Logo'
                         />
-                        <span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'>
+                        <span className='self-center text-sm md:text-2xl font-semibold whitespace-nowrap text-primary'>
                             Fashion Fusion
                         </span>
                     </a>
-                    <div className='flex md:order-2'>
-                        <button
+                    <div className='flex md:order-2 '>
+                        <Link
+                            href={'/login'}
                             type='button'
                             data-collapse-toggle='navbar-search'
                             aria-controls='navbar-search'
                             aria-expanded='false'
-                            className='md:order-3 text-black font-bold ml-0 md:ml-4 px-6 focus:outline-none focus:ring-4  bg-primary rounded-3xl text-sm p-2.5 me-1'
+                            className='md:order-3 text-black font-bold ml-0 md:ml-4 px-4 md:px-6 focus:outline-none focus:ring-4  bg-primary rounded-3xl text-xs md:text-sm p-2.5 me-1'
                         >
                             Login
                             <span className='sr-only'>Login</span>
-                        </button>
+                        </Link>
                         <div className='relative hidden md:block'>
                             <div className='absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none'>
                                 <span className='sr-only'>Search icon</span>
@@ -54,9 +55,9 @@ const Header = () => {
                             />
                         </div>
                         <div className='btnCart cursor-pointer hover:text-primary mt-1 md:mt-0 ml-0 md:ml-2'>
-                          <a href="/cart">
-                            <i className='ri-shopping-cart-fill text-2xl md:text-3xl mx-2 '></i>
-                          </a>
+                            <a href='/cart'>
+                                <i className='ri-shopping-cart-fill text-2xl md:text-3xl mx-2 '></i>
+                            </a>
                         </div>
                         <button
                             data-collapse-toggle='navbar-search'
@@ -129,7 +130,7 @@ const Header = () => {
                                     href='#'
                                     className='block py-2 px-3 text-gray-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0'
                                 >
-                                    About
+                                    Contact
                                 </a>
                             </li>
                         </ul>
