@@ -4,6 +4,7 @@ import { AppProvider } from './components/AppContext';
 import Header from './components/layout/Header';
 import 'remixicon/fonts/remixicon.css';
 import Footer from './components/layout/Footer';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -15,12 +16,10 @@ export default function RootLayout({ children }) {
     return (
         <html lang='en'>
             <body className={inter.className}>
+                <Header />
                 <main className=' max-w-7xl mx-auto p-4'>
-                    <AppProvider>
-                        <Header />
-                        {children}
-                        <Footer />
-                    </AppProvider>
+                    <AppProvider>{children}</AppProvider>
+                    <Footer />
                 </main>
             </body>
         </html>

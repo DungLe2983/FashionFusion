@@ -3,27 +3,35 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
-const colors = ['Red', 'Green', 'Yellow', 'Blue', 'Black', 'White'];
-const categories = ['Male', 'Female'];
+const colors = ['Đen', 'Trắng', 'Vàng', 'Nâu', 'Đỏ', 'Hồng'];
+const categories = ['Nam', 'Nữ'];
 const sizes = ['S', 'M', 'L', 'XL'];
-const sortingOrder = ['Áo thun', 'Áo Polo', 'Baby Tee', 'Áo sơ mi', 'Hoodie', 'Quần','Phụ kiện'];
+const sortingOrder = [
+    'Áo thun',
+    'Áo Polo',
+    'Baby Tee',
+    'Áo sơ mi',
+    'Hoodie',
+    'Quần',
+    'Phụ kiện',
+];
 
 const filterOptions = [
     {
         id: 'sort',
-        title: 'Sorting Order',
+        title: 'Bộ lọc tìm kiếm',
         options: sortingOrder,
         type: 'checkbox',
     },
     {
         id: 'categories',
-        title: 'Categories',
+        title: 'Giới tính',
         options: categories,
         type: 'checkbox',
     },
     {
         id: 'colors',
-        title: 'Colors',
+        title: 'Màu sắc',
         options: colors,
         type: 'checkbox',
     },
@@ -74,11 +82,13 @@ const FilterSection = () => {
             {/* Render filter options */}
             {filterOptions.map((filter) => (
                 <div className='border-b pb-4' key={filter.id}>
-                    <h3 className='font-bold mb-2 '>{filter.title}</h3>
+                    <h3 className='font-bold mb-2 text-sm md:text-base '>
+                        {filter.title}
+                    </h3>
                     {filter.options.map((option) => (
                         <label
                             key={option}
-                            className='flex items-center space-x-2 text-base text-gray-600 cursor-pointer'
+                            className='flex items-center space-x-2 text-sm md:text-base text-gray-600 cursor-pointer'
                         >
                             <div className='flex gap-2 items-center mt-2'>
                                 <input
