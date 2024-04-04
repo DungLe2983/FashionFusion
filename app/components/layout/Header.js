@@ -3,14 +3,12 @@ import { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
-
 
     return (
         <div>
@@ -36,7 +34,7 @@ const Header = () => {
                             data-collapse-toggle='navbar-search'
                             aria-controls='navbar-search'
                             aria-expanded='false'
-                            className='md:order-3 text-black font-bold ml-0 md:ml-4 px-4 md:px-6 focus:outline-none focus:ring-4  bg-primary rounded-3xl text-xs md:text-sm p-2.5 me-1'
+                            className='md:order-3 text-black font-bold ml-0 md:ml-4 px-4 md:px-6 focus:outline-none  bg-primary rounded-3xl text-xs md:text-sm p-2.5 me-1'
                         >
                             Login
                             <span className='sr-only'>Login</span>

@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-const ProductCard = ({ image, hoverImage, name, subtitle, price }) => {
+const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
     const [isHovered, setIsHovered] = useState(false);
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -31,9 +31,13 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price }) => {
                     </Link>
                     <p className='text-gray-600 text-sm mt-2'>{subtitle}</p>
                 </div>
-                <div className='px-6 py-4'>
+                <div className='px-6 py-4 flex justify-between'>
                     <p className='text-gray-900 font-semibold text-base'>
                         {price}
+                    </p>
+                    <p className='flex gap-2 items-center mr-2 text-sm'>
+                        <i className='ri-star-fill text-yellow-400'></i>
+                        <span className='font-semibold'>{rate}</span>
                     </p>
                 </div>
             </div>

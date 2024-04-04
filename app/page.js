@@ -15,6 +15,7 @@ export default function Home() {
             name: 'Áo thun Cotton Compact In Lụa VỤN ART Logo Trái V1',
             subtitle: '100% Cotton / Đen',
             price: '399.000đ',
+            rate: '5',
         },
         {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunartqyay2_72.jpg',
@@ -23,6 +24,7 @@ export default function Home() {
                 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang7_23.jpg',
             subtitle: 'Care & Share / Đen Trắng',
             price: '399.000đ',
+            rate: '5',
         },
         {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/oantuti1_2.jpg',
@@ -31,6 +33,7 @@ export default function Home() {
             name: 'Áo thun Cotton Compact In Lụa VỤN ART Oẳn Tù Tì',
             subtitle: 'Care & Share / Trắng',
             price: '299.000đ',
+            rate: '5',
         },
         {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrai11_19.jpg',
@@ -39,6 +42,7 @@ export default function Home() {
             name: 'Áo thun Cotton Compact In Lụa VỤN ART Logo Trái V1',
             subtitle: '100% Cotton / Đen',
             price: '399.000đ',
+            rate: '5',
         },
         {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunartqyay2_72.jpg',
@@ -47,6 +51,7 @@ export default function Home() {
                 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang7_23.jpg',
             subtitle: 'Care & Share / Đen Trắng',
             price: '399.000đ',
+            rate: '5',
         },
         {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/oantuti1_2.jpg',
@@ -55,6 +60,7 @@ export default function Home() {
             name: 'Áo thun Cotton Compact In Lụa VỤN ART Oẳn Tù Tì',
             subtitle: 'Care & Share / Trắng',
             price: '299.000đ',
+            rate: '5',
         },
         {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunartqyay2_72.jpg',
@@ -63,6 +69,7 @@ export default function Home() {
                 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang7_23.jpg',
             subtitle: 'Care & Share / Đen Trắng',
             price: '399.000đ',
+            rate: '5',
         },
         {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/oantuti1_2.jpg',
@@ -71,6 +78,7 @@ export default function Home() {
             name: 'Áo thun Cotton Compact In Lụa VỤN ART Oẳn Tù Tì',
             subtitle: 'Care & Share / Trắng',
             price: '299.000đ',
+            rate: '5',
         },
         //...
     ];
@@ -88,6 +96,7 @@ export default function Home() {
                         name={product.name}
                         subtitle={product.subtitle}
                         price={product.price}
+                        rate={product.rate}
                     />
                 ))}
             </div>

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { TableProductInCart } from '../components/layout/TableProductInCart';
+import Link from 'next/link';
 
 const CartPage = () => {
     const [data, setData] = useState([
@@ -61,7 +62,7 @@ const CartPage = () => {
                     </table>
                 </div>
                 <div className='mt-6 flex justify-end'>
-                    <div className='text-right '>
+                    <div className='text-right flex flex-col gap-4 '>
                         <div className=' flex items-baseline gap-60'>
                             <p className='font-semibold text-gray-900'>
                                 Tổng tiền:
@@ -70,9 +71,12 @@ const CartPage = () => {
                                 1.650.000đ
                             </span>
                         </div>
-                        <button className='font-semibold bg-gray-900 py-3 w-full text-white mt-4 '>
+                        <Link
+                            href={'/checkout'}
+                            className=' text-center bg-primary font-bold py-3 w-full text-white '
+                        >
                             Thanh toán
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
