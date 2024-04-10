@@ -10,9 +10,9 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
         setIsHovered(false);
     };
     return (
-        <div className=' relative overflow-hidden group transition '>
+        <div className=' relative overflow-hidden group transition shadow-lg'>
             <div
-                className='max-w-xs rounded overflow-hidden shadow-xl '
+                className='max-w-xs rounded overflow-hidden  '
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
@@ -25,7 +25,7 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
                 <div className='px-6 py-4'>
                     <Link
                         href={'/products/id'}
-                        className='font-bold text-base mb-2 cursor-pointer hover:text-primary'
+                        className='font-bold text-base mb-2 cursor-pointer hover:text-primary '
                     >
                         {name}
                     </Link>

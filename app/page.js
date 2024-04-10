@@ -75,7 +75,7 @@ export default function Home() {
             image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/oantuti1_2.jpg',
             hoverImage:
                 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang3_40.jpg',
-            name: 'Áo thun Cotton Compact In Lụa VỤN ART Oẳn Tù Tì',
+            name: 'Áo thun Cotton Compact ',
             subtitle: 'Care & Share / Trắng',
             price: '299.000đ',
             rate: '5',

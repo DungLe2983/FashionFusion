@@ -11,9 +11,9 @@ const HotSaleCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
         setIsHovered(false);
     };
     return (
-        <div className=' relative overflow-hidden group transition '>
+        <div className=' relative overflow-hidden group transition  shadow-lg '>
             <div
-                className='max-w-xs rounded overflow-hidden shadow-xl '
+                className='max-w-xs rounded overflow-hidden  '
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
