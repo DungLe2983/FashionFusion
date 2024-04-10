@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
+
+const HotSaleCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
     const [isHovered, setIsHovered] = useState(false);
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -54,11 +55,11 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
                     <i className='ri-eye-fill text-sm md:text-xl'></i>
                 </Link>
             </div>
-            <span className='absolute top-0 left-0 m-2 md:m-4 bg-white border  px-3 py-1 text-center text-xs font-medium text-red-600'>
-                39% OFF
+            <span className='absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-red-500 text-center text-sm text-white'>
+                Sale
             </span>
         </div>
     );
 };
 
-export default ProductCard;
+export default HotSaleCard;

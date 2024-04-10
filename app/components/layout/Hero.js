@@ -6,7 +6,7 @@ export default function Hero() {
             url: 'https://bizweb.dktcdn.net/100/415/697/themes/902041/assets/slider_3.jpg?1710226595388',
         },
         {
-            url: 'https://mcdn.coolmate.me/image/October2021/BANNER_HERO-020.jpg',
+            url: 'https://file.hstatic.net/200000312481/file/2mat_3469760b49bb4176864116189169f7b1.jpg',
         },
         {
             url: '/banner1.png',

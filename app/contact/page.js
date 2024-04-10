@@ -7,7 +7,7 @@ const ContactPage = () => {
                 <div className='text-base text-gray-900'>
                     <div className='mx-auto w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl'>
                         <div className='mx-2 pt-12 text-center md:mx-auto md:w-2/3 md:pb-12'>
-                            <h2 className='mb-4 text-xxl font-black sm:text-3xl xl:text-4xl'>
+                            <h2 className='mb-4 text-2xl font-black sm:text-3xl xl:text-4xl'>
                                 Liên hệ với Chúng tôi
                             </h2>
                             <div className='text-sm sm:text-base xl:text-lg'>
@@ -88,7 +88,7 @@ const ContactPage = () => {
                     </form>
                     <div className='mt-10 bg-primary px-10 py-8 text-gray-100 md:mt-0 md:ml-auto'>
                         <div className=''>
-                            <p className='mb-4 font-medium border-b  pb-2'>
+                            <p className='mb-4 font-semibold border-b  pb-2'>
                                 GIỜ LÀM VIỆC
                             </p>
                             <p className='mb-4'>Thứ 3 – Thứ 7: 08:00 – 20:00</p>
@@ -96,14 +96,17 @@ const ContactPage = () => {
                             <p className='mb-4'>Thứ 2: Closed</p>
                             <p className='mb-4'>
                                 Email:
-                                <a href='#' className='font-semibold underline'>
+                                <a href='' className='font-semibold underline'>
                                     {' '}
                                     supportFashionFusion@gmail.com
                                 </a>
                             </p>
                             <p className='mb-4'>
                                 Phone:
-                                <a href='#' className='font-semibold underline'>
+                                <a
+                                    href='tel:+84914666888'
+                                    className='font-semibold underline'
+                                >
                                     {' '}
                                     +84 (0) 10-32 32 322
                                 </a>
@@ -111,8 +114,10 @@ const ContactPage = () => {
                             <hr className='my-2 h-0 border-t border-r-0 border-b-0 border-l-0 border-gray-300' />
                             <p className='mb-4'>Org.no: 63452-2832</p>
                             <p className='mb-4'>VAT no: 32353</p>
-                            <hr className='my-4 h-0 border-t border-r-0 border-b-0 border-l-0 border-gray-300' />
-                            <p>Địa chỉ:</p>
+                           
+                            <p className='mb-4 font-semibold border-b  pb-2'>
+                                ĐỊA CHỈ:
+                            </p>
                             <p>
                                 Tầng 17 Saigon Centre 2, 67 Lê Lợi, Phường Bến
                                 Nghé, Quận 1, TP. Hồ Chí Minh
