@@ -3,10 +3,10 @@ import { GoDotFill } from 'react-icons/go';
 export default function Hero() {
     const slides = [
         {
-            url: 'https://bizweb.dktcdn.net/100/415/697/themes/902041/assets/slider_3.jpg?1710226595388',
+            url: 'https://file.hstatic.net/200000312481/file/2mat_3469760b49bb4176864116189169f7b1.jpg',
         },
         {
-            url: 'https://file.hstatic.net/200000312481/file/2mat_3469760b49bb4176864116189169f7b1.jpg',
+            url: 'https://bizweb.dktcdn.net/100/415/697/themes/902041/assets/slider_3.jpg?1710226595388',
         },
         {
             url: '/banner1.png',

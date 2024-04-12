@@ -114,6 +114,44 @@ const RunningClothesData = [
         rate: '5',
     },
 ];
+const TShirtMenData = [
+    {
+        image: 'https://media2.coolmate.me/cdn-cgi/image/width=672…ty=85,format=auto/uploads/March2023/blue_copy.jpg',
+        hoverImage:
+            'https://media2.coolmate.me/cdn-cgi/image/width=672…ormat=auto/uploads/November2021/1426x2100_(3).jpg',
+        name: 'Áo thun nam Cotton Compact  ',
+        subtitle: 'Xanh Navy',
+        price: '209.000đ',
+        rate: '5',
+    },
+    {
+        image: 'https://media2.coolmate.me/cdn-cgi/image/width=672…=auto/uploads/March2024/3dchaybov2esenv2.1_12.jpg',
+        hoverImage:
+            '	https://media2.coolmate.me/cdn-cgi/image/width=672…ormat=auto/uploads/March2024/ATS.RN.EFM.26_53.jpg',
+        name: 'Áo Thun Nam chạy bộ Essential',
+        subtitle: 'Xanh Amparo',
+        price: '169.000đ',
+        rate: '4',
+    },
+    {
+        image: 'https://media2.coolmate.me/cdn-cgi/image/width=672…ty=85,format=auto/uploads/January2022/2recyw2.jpg',
+        hoverImage:
+            'https://media2.coolmate.me/cdn-cgi/image/width=672…lity=85,format=auto/uploads/March2023/15-2_56.jpg',
+        name: ' Áo Thun Nam Thể Thao Coolmate Basics',
+        subtitle: 'Xanh đen',
+        price: '149.000đ',
+        rate: '4',
+    },
+    {
+        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/October2023/denn3-(2)_copys_62.jpg',
+        hoverImage:
+            'https://mcdn2.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/October2023/coaoo4.jpg',
+        name: 'Áo Thun Nam Cotton Team Whales',
+        subtitle: 'Mềm mại / Đen',
+        price: '199.000đ',
+        rate: '4',
+    },
+];
 const SalePage = () => {
 
   return (
@@ -125,7 +163,11 @@ const SalePage = () => {
           />
           <div className='text-primary my-10 flex gap-2 font-semibold'>
               <i className='ri-price-tag-3-fill'></i>
-              <p className='text-2xl'>Hàng HOT giá xịn</p>
+              <p className='text-2xl'>
+                  HÀNG{' '}
+                  <span className='text-red-500 text-2xl font-bold'>HOT</span>{' '}
+                  GIÁ XỊN
+              </p>
           </div>
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-[20px] gap-y-10  '>
               {products.map((product, index) => (
@@ -150,7 +192,7 @@ const SalePage = () => {
                   <p className=' text-white text-2xl md:text-6xl font-bold'>
                       ĐỒ CHẠY BỘ
                   </p>
-                  <div className='flex w-32 text-xs md:text-base md:w-48 rounded items-center bg-blue-500 hover:bg-blue-600 text-white'>
+                  <div className='flex w-32 text-xs md:text-base md:w-48 rounded-3xl items-center bg-blue-500 hover:bg-blue-600 text-white'>
                       <button className='font-bold py-2 px-1 md:px-4 '>
                           Khám phá ngay
                       </button>
@@ -163,6 +205,40 @@ const SalePage = () => {
           </p>
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-[20px] gap-y-10  '>
               {RunningClothesData.slice(0, 4).map((product, index) => (
+                  <ProductCard
+                      key={index}
+                      image={product.image}
+                      hoverImage={product.hoverImage}
+                      name={product.name}
+                      subtitle={product.subtitle}
+                      price={product.price}
+                      rate={product.rate}
+                  />
+              ))}
+          </div>
+          <div className='relative'>
+              <img
+                  src='https://media2.coolmate.me/cdn-cgi/image/width=1800,height=1200,quality=80,format=auto/uploads/March2024/mceclip13_75.png'
+                  alt='banner'
+                  className='w-full h-[400px] mt-20 object-cover rounded'
+              />
+              <div className='flex flex-col gap-4 absolute top-1/2 left-5 md:left-20 transform -translate-y-1/2'>
+                  <p className=' text-white text-2xl md:text-6xl font-bold'>
+                      ÁO THUN NAM
+                  </p>
+                  <div className='flex w-32 text-xs md:text-base md:w-48 rounded-3xl items-center bg-blue-500 hover:bg-blue-600 text-white'>
+                      <button className='font-bold py-2 px-2 md:px-4 '>
+                          Khám phá ngay
+                      </button>
+                      <i class='ri-arrow-right-circle-line text-base md:text-xl'></i>
+                  </div>
+              </div>
+          </div>
+          <p className='text-2xl text-primary font-semibold my-10'>
+              SẢN PHẨM ÁO THUN NAM
+          </p>
+          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-[20px] gap-y-10  '>
+              {TShirtMenData.slice(0, 4).map((product, index) => (
                   <ProductCard
                       key={index}
                       image={product.image}

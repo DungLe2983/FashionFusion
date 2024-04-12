@@ -111,7 +111,7 @@ const Header = () => {
                             </li>
                             <li>
                                 <a
-                                    href='#'
+                                    href='/products'
                                     className='block py-2 px-3 text-gray-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0'
                                 >
                                     Male
@@ -119,7 +119,7 @@ const Header = () => {
                             </li>
                             <li>
                                 <a
-                                    href='#'
+                                    href='/products'
                                     className='block py-2 px-3 text-gray-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0'
                                 >
                                     Female
