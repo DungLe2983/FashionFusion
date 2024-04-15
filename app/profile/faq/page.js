@@ -115,9 +115,75 @@ const FaQPage = () => {
                         <h1 className='py-2 text-2xl font-semibold'>
                             Chính sách và câu hỏi thường gặp
                         </h1>
-                        <p className='font-semibold mt-4'>1. CHÍNH SÁCH ĐỔI SẢN PHẨM</p>
+                        <p className='font-semibold mt-4'>
+                            1. CHÍNH SÁCH ĐỔI SẢN PHẨM
+                        </p>
+                        <p className='mt-4 font-semibold text-[14px] '>
+                            a. Đổi size
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Áp dụng 01 lần đổi /1 đơn hàng với các đơn hàng
+                            mua online và các đơn hàng mua tại cửa hàng.
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Sản phẩm đổi trong thời gian 3 ngày kể từ ngày mua
+                            hàng trên hoá đơn (đối với khách mua hàng trực tiếp
+                            tại cửa hàng), 3 ngày kể từ ngày nhận hàng (Đối với
+                            khách mua online)
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Sản phẩm còn mới nguyên tem, tags và mang theo hoá
+                            đơn mua hàng, sản phẩm chưa giặt và không dơ bẩn, hư
+                            hỏng bởi những tác nhân bên ngoài cửa hàng sau khi
+                            mua hàng.
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Không áp dụng đối với các sản phẩm là phụ kiện
+                        </p>
+                        <p className='mt-4 font-semibold text-[14px] '>
+                            b. Đổi sản phẩm lỗi
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            Điều kiện áp dụng
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Sản phẩm lỗi kỹ thuật: Sản phẩm rách, bung keo, …
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            Đối với sản phẩm lỗi kỹ thuật cần phản hồi đến
+                            FashionFusion trong vòng 3 ngày, kể từ ngày mua hàng
+                            trên hoá đơn đối với khách mua trực tiếp tại cửa
+                            hàng, 3 ngày kể từ ngày nhận hàng đối với khách mua
+                            online.
+                        </p>
+                        <p className='font-semibold mt-4'>
+                            2. PHƯƠNG THỨC ĐỔI SẢN PHẨM
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Hàng mua trực tiếp tại cửa hàng: Đổi trả trực tiếp
+                            tại cửa hàng mua hàng
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Hàng mua online (thông qua webiste, Shopee,
+                            Lazada): liên hệ fanpage Teelab để được hướng dẫn
+                            đổi trả
+                        </p>
+                        <p className='font-semibold mt-4'>
+                            3. CHI PHÍ ĐỔI HÀNG
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Miễn phí đổi hàng cho khách mua ở FashionFusion
+                            trong trường hợp bị lỗi từ nhà sản xuất, giao nhầm
+                            hàng, bị hư hỏng trong quá trình vận chuyển hàng.
+                        </p>
+                        <p className='mt-4 text-gray-600 text-[14px] '>
+                            – Trong trường hợp không vừa size hay khách hàng
+                            không ưng sản phẩm không muốn nhận hàng phiền khách
+                            hàng trả ship hoàn đơn hàng về
+                        </p>
+                        <p className='font-bold italic my-8'>Experiment on Your Style</p>
                     </div>
-                    <hr className='mt-4 mb-8' />
+
                 </div>
             </div>
         </div>

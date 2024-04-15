@@ -115,8 +115,85 @@ const HistoryOrderPage = () => {
                         <h1 className='py-2 text-2xl font-semibold'>
                             Lịch sử đơn hàng
                         </h1>
+                        <p
+                            className='text-gray-600 mt-4 font-semibold
+                        '
+                        >
+                            Đơn hàng của bạn
+                        </p>
                     </div>
-                    <hr className='mt-4 mb-8' />
+                    <p className='text-gray-600 text-center mt-8 text-sm font-bold'>Bạn chưa có đơn hàng nào...</p>
+                    {/* <div className='my-8 space-y-3 rounded-lg border px-2 py-4 sm:px-6'>
+                        <div className='flex flex-col rounded-lg bg-white sm:flex-row'>
+                            <img
+                                className='m-2 h-28 w-28 rounded-md border object-cover object-center'
+                                src='https://bizweb.dktcdn.net/thumb/compact/100/415/697/products/img-9367-1-56fef4f6-017a-4b12-96d8-fd10130f041b.jpg'
+                                alt=''
+                            />
+                            <div className='flex w-full flex-col px-4 py-4 justify-between'>
+                                <span className='font-semibold text-sm'>
+                                    Áo Thun Teelab Local Brand Unisex Holiday
+                                    special " Lướt sóng " Tshirt TS237
+                                </span>
+                                <div className='flex gap-4 mt-3 items-center '>
+                                    <span className='float-right text-gray-400 text-sm'>
+                                        Kem / M
+                                    </span>
+                                    <div className='flex items-center gap-0'>
+                                        <button className='inline-flex items-center justify-center border-r-0 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300'>
+                                            -
+                                        </button>
+                                        <input
+                                            id='first_product'
+                                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm block h-6 w-8  text-center appearance-none'
+                                            required
+                                            disabled
+                                            defaultValue={1}
+                                        />
+                                        <button className='inline-flex items-center justify-center h-6 w-6 border-l-0 text-sm font-medium text-gray-500 bg-white border border-gray-300'>
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <p className='text-lg font-bold'>179.000 ₫</p>
+                            </div>
+                        </div>
+                        <div className='flex flex-col rounded-lg bg-white sm:flex-row'>
+                            <img
+                                className='m-2 h-28 w-28 rounded-md border object-cover object-center'
+                                src='https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'
+                                alt=''
+                            />
+                            <div className='flex w-full flex-col px-4 py-4 justify-between'>
+                                <span className='font-semibold text-sm'>
+                                    Áo Thun Teelab Local Brand Unisex Holiday
+                                    special " Lướt sóng " Tshirt TS237
+                                </span>
+                                <div className='flex gap-4 mt-3 items-center '>
+                                    <span className='float-right text-gray-400 text-sm'>
+                                        Cam / 2XL
+                                    </span>
+                                    <div className='flex items-center gap-0'>
+                                        <button className='inline-flex items-center justify-center border-r-0 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300'>
+                                            -
+                                        </button>
+                                        <input
+                                            id='first_product'
+                                            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm block h-6 w-8  text-center appearance-none'
+                                            required
+                                            disabled
+                                            defaultValue={1}
+                                        />
+                                        <button className='inline-flex items-center justify-center h-6 w-6 border-l-0 text-sm font-medium text-gray-500 bg-white border border-gray-300'>
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <p className='text-lg font-bold'>399.000 ₫</p>
+                            </div>
+                        </div>
+                    </div> */}
                 </div>
             </div>
         </div>
