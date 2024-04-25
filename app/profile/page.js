@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
+
 const ProfilePage = () => {
     const [birthday, setBirthDay] = useState();
     const [showPassword, setShowPassword] = useState(false);
@@ -102,7 +104,10 @@ const ProfilePage = () => {
                             </Link>
                         </li>
                         <li className='mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-primary hover:text-primary'>
-                            <div className='flex gap-4 items-center'>
+                            <div
+                                className='flex gap-4 items-center'
+                                onClick={() => signOut()}
+                            >
                                 <i className='ri-logout-box-r-fill'></i>
                                 <p>Đăng xuất</p>
                             </div>
