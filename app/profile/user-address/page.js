@@ -1,5 +1,7 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 const UserAddressPage = () => {
     return (
         <div className='py-8'>
@@ -47,7 +49,10 @@ const UserAddressPage = () => {
                         <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
                             Chính sách và câu hỏi thường gặp
                         </li>
-                        <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
+                        <li
+                            onClick={() => signOut()}
+                            className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'
+                        >
                             Đăng xuất
                         </li>
                     </ul>
@@ -102,7 +107,10 @@ const UserAddressPage = () => {
                             </Link>
                         </li>
                         <li className='mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-primary hover:text-primary'>
-                            <div className='flex gap-4 items-center'>
+                            <div
+                                onClick={() => signOut()}
+                                className='flex gap-4 items-center'
+                            >
                                 <i className='ri-logout-box-r-fill'></i>
                                 <p>Đăng xuất</p>
                             </div>
@@ -143,7 +151,6 @@ const UserAddressPage = () => {
                         </div>
                         <hr className='mt-4' />
                     </div>
-
                 </div>
             </div>
         </div>

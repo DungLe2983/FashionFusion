@@ -1,5 +1,7 @@
+'use client'
 import React from 'react';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 const HistoryOrderPage = () => {
     return (
         <div className='py-8'>
@@ -47,7 +49,10 @@ const HistoryOrderPage = () => {
                         <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
                             Chính sách và câu hỏi thường gặp
                         </li>
-                        <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
+                        <li
+                            onClick={() => signOut()}
+                            className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'
+                        >
                             Đăng xuất
                         </li>
                     </ul>
@@ -102,7 +107,10 @@ const HistoryOrderPage = () => {
                             </Link>
                         </li>
                         <li className='mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-primary hover:text-primary'>
-                            <div className='flex gap-4 items-center'>
+                            <div
+                                className='flex gap-4 items-center'
+                                onClick={() => signOut()}
+                            >
                                 <i className='ri-logout-box-r-fill'></i>
                                 <p>Đăng xuất</p>
                             </div>
@@ -122,7 +130,9 @@ const HistoryOrderPage = () => {
                             Đơn hàng của bạn
                         </p>
                     </div>
-                    <p className='text-gray-600 text-center mt-8 text-sm font-bold'>Bạn chưa có đơn hàng nào...</p>
+                    <p className='text-gray-600 text-center mt-8 text-sm font-bold'>
+                        Bạn chưa có đơn hàng nào...
+                    </p>
                     {/* <div className='my-8 space-y-3 rounded-lg border px-2 py-4 sm:px-6'>
                         <div className='flex flex-col rounded-lg bg-white sm:flex-row'>
                             <img
