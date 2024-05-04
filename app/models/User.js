@@ -9,10 +9,7 @@ const UserSchema = new Schema(
         },
         password: {
             type: String,
-<<<<<<< HEAD
             // require: true,
-=======
->>>>>>> 94b748a6328c6421056f514f8fc45459fbedf89f
         },
         name: {
             type: String,
