@@ -53,11 +53,28 @@ const handler = NextAuth({
                 }
 
                 try {
-                    await User.findOneAndUpdate(
-                        { email: profile.email },
-                        { name: profile.name },
-                        { upsert: true }
-                    );
+                    // await User.findOneAndUpdate(
+                    //     { email: profile.email },
+                    //     { name: profile.name },
+                    //     { upsert: true }
+                    // );
+                    const user = await User.findOne({ email: profile.email });
+
+                    if (user) {
+                        // If the user is found, update their name
+                        await User.updateOne(
+                            { email: profile.email },
+                            { $set: { name: profile.name } }
+                        );
+                    } else {
+                        // If no user is found, create a new one
+                        const newUser = new User({
+                            email: profile.email,
+                            name: profile.name,
+                        });
+
+                        await newUser.save(); // Save the new user to the database
+                    }
                 } catch (error) {
                     console.log(error)
                 }
