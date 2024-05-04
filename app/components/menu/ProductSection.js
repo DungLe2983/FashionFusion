@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import ProductCard from './ProductCard';
+
 const filterProducts = [
     {
         image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrai11_19.jpg',
@@ -90,7 +91,7 @@ const ProductSection = () => {
                     rate={product.rate}
                 />
             ))}
-            ;
+
         </div>
     );
 };
