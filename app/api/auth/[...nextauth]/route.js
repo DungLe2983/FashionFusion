@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { compare } from "bcrypt";
 import User from "../../../models/User";
+import dbConnect from "@/app/utils/db";
 
 const handler = NextAuth({
     secret: process.env.SECRET,
@@ -22,7 +23,8 @@ const handler = NextAuth({
                 password: {},
             },
             async authorize(credentials, req) {
-                await mongoose.connect(process.env.MONGO_URL);
+                // await mongoose.connect(process.env.MONGO_URL);
+                await dbConnect();
 
                 const user = await User.findOne({ email: credentials?.email });
                 const email = credentials.email;
@@ -46,7 +48,9 @@ const handler = NextAuth({
     ],
     callbacks: {
         async signIn({ account, profile }) {
-            await mongoose.connect(process.env.MONGO_URL);
+            // await mongoose.connect(process.env.MONGO_URL);
+            await dbConnect();
+
             if (account.provider === "google") {
                 if (!profile || !profile.email) {
                     throw new Error("No profile");
