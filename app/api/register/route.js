@@ -1,12 +1,17 @@
 import User from "@/app/models/User";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import dbConnect from "@/app/utils/db";
 
 export async function POST(req) {
     try {
-        //get data and connect to db
+        //get data
         const body = await req.json();
-        await mongoose.connect(process.env.MONGO_URL);
+
+        //connect to DB
+        //await mongoose.connect(process.env.MONGO_URL);
+        await dbConnect();
+
 
         //hash password
         const pass = body.password;

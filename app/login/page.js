@@ -17,7 +17,7 @@ export default function LoginPage() {
 
     async function loginWithGoogle() {
         setLoginFalse(false);
-        const res = signIn("google", { callbackUrl: "/" });
+        signIn("google", { callbackUrl: "/" });
     }
 
     async function handleFormSubmit(ev) {
