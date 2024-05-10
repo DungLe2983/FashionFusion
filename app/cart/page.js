@@ -17,32 +17,6 @@ const CartPage = () => {
     if (status === "unauthenticated") {
         return redirect("/login");
     }
-
-    //
-    const [data, setData] = useState([
-        {
-            title: "Quần Short Lưới Teelab Local Brand Unisex Airism Texture PS067",
-            color: "Den/M",
-            price: 179000,
-            quantity: 1,
-            total: 179000,
-        },
-        {
-            title: "Áo Thun Teelab Local Brand Unisex Holiday special Lượt sóng Tshirt TS237",
-            color: "Kem/M",
-            price: 185000,
-            quantity: 1,
-            total: 185000,
-        },
-    ]);
-
-    // const handleQuantityChange = (e, index) => {
-    //     const newData = [...data];
-    //     newData[index].quantity = parseInt(e.target.value);
-    //     newData[index].total = newData[index].quantity * newData[index].price;
-    //     setData(newData);
-    // };
-
     return (
         <div>
             <h2 className="text-center font-bold text-3xl mt-8">
