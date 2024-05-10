@@ -78,10 +78,13 @@ const Header = () => {
                                 placeholder='Search...'
                             />
                         </div>
-                        <div className='btnCart cursor-pointer hover:text-primary mt-1 md:mt-0 ml-0 md:ml-2'>
+                        <div className='btnCart relative cursor-pointer hover:text-primary mt-1 md:mt-0 ml-0 md:ml-2'>
                             <a href='/cart'>
                                 <i className='ri-shopping-cart-fill text-2xl md:text-3xl mx-2 '></i>
                             </a>
+                            <div className='absolute top-[-5px] right-[0] bg-red-600 w-4 h-4 rounded-full text-white font-semibold text-[8px] grid place-items-center'>
+                                1
+                            </div>
                         </div>
                         <button
                             data-collapse-toggle='navbar-search'
