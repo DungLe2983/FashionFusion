@@ -8,10 +8,7 @@ export async function POST(req) {
         //get data
         const body = await req.json();
 
-        //connect to DB
-        //await mongoose.connect(process.env.MONGO_URL);
         await dbConnect();
-
 
         //hash password
         const pass = body.password;
