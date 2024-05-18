@@ -10,14 +10,7 @@ const CartPage = () => {
     const session = useSession();
     const { status } = session;
 
-    if (status === "loading") {
-        return "Loading...."
-    }
-
-    if (status === "unauthenticated") {
-        return redirect("/login");
-    }
-
+    
     //
     const [data, setData] = useState([
         {
@@ -35,15 +28,23 @@ const CartPage = () => {
             total: 185000,
         },
     ]);
-
+    
     // const handleQuantityChange = (e, index) => {
-    //     const newData = [...data];
-    //     newData[index].quantity = parseInt(e.target.value);
-    //     newData[index].total = newData[index].quantity * newData[index].price;
-    //     setData(newData);
-    // };
-
-    return (
+        //     const newData = [...data];
+        //     newData[index].quantity = parseInt(e.target.value);
+        //     newData[index].total = newData[index].quantity * newData[index].price;
+        //     setData(newData);
+        // };
+        
+        if (status === "loading") {
+            return "Loading...."
+        }
+    
+        if (status === "unauthenticated") {
+            return redirect("/login");
+        }
+        
+        return (
         <div>
             <h2 className="text-center font-bold text-3xl mt-8">
                 Giỏ hàng của bạn

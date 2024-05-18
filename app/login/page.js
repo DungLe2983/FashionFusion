@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,11 +30,10 @@ export default function LoginPage() {
             password,
             redirect: false,
         });
-        console.log({ res });
 
         if (res.ok) {
             router.push("/");
-            console.log(res);
+            console.log("Sign-in successfully");
         } else {
             console.log("Sign-in failed");
             setLoginFalse(true);
