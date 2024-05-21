@@ -26,7 +26,6 @@ const ProfilePage = () => {
 
             if (res.ok) {
                 const user = await res.json();
-                console.log("User data:", user);
 
                 if (user) {
                     const formattedDate = new Date(user.birthday)

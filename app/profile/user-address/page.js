@@ -1,8 +1,57 @@
-'use client';
-import React from 'react';
-import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+"use client";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
+
+import Address from "@/app/components/Address";
+
 const UserAddressPage = () => {
+    const [userData, setUserData] = useState(null);
+
+    const session = useSession();
+    const email = session.data?.user.email;
+
+    async function getAddress(email) {
+        if (!email) {
+            console.log("No email:", email);
+        }
+        try {
+            const res = await fetch(`/api/users/${email}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+
+            const user = await res.json();
+            if (res.ok) {
+                setUserData(user);
+                console.log("Get data successful:", user.address);
+            } else {
+                console.error("Error fetching user:", res.statusText);
+            }
+        } catch (error) {
+            console.error("Error in fetch:", error);
+        }
+    }
+
+    function deleteAddress() {
+        //using API to delete Address
+        console.log("delete address!!", email);
+    }
+
+    function changeAddress() {
+        //using API to change Address
+        console.log("change Address!!", email);
+    }
+
+    function addNewAddress() {
+        //using API to add new Address
+        console.log("add new Address!!", email);
+    }
+
+    useEffect(() => {
+        getAddress(email);
+    }, [session]);
+
     return (
         <div className="py-8">
             <h1 className="border-b py-6 text-3xl font-semibold">
@@ -124,7 +173,10 @@ const UserAddressPage = () => {
                             <h1 className="py-2 text-2xl font-semibold">
                                 Địa chỉ giao hàng
                             </h1>
-                            <button className="bg-slate-800 px-6 rounded-3xl text-white py-3">
+                            <button
+                                className="bg-slate-800 px-6 rounded-3xl text-white py-3"
+                                onClick={addNewAddress}
+                            >
                                 Thêm địa chỉ mới
                             </button>
                         </div>
@@ -133,23 +185,19 @@ const UserAddressPage = () => {
                     <h2 className="font-semibold text-xl">Sổ địa chỉ:</h2>
                     <div>
                         <div className="flex flex-col gap-2">
-                            <div className="flex justify-between mt-4">
-                                <p className=" font-medium text-lg">
-                                    Dung Le Quoc
-                                </p>
-                                <div className="flex gap-2 text-sm text-primary ">
-                                    <button className=" border-r-2 border-gray-300 pr-2 hover:text-hoverColor">
-                                        Cập nhật
-                                    </button>
-                                    <button>Xóa</button>
+                            {userData && (
+                                <div>
+                                    {userData.address.map((addr, index) => (
+                                        <Address
+                                            key={index}
+                                            address={addr}
+                                            onChange={changeAddress}
+                                            onDelete={deleteAddress}
+                                        />
+                                    ))}
                                 </div>
-                            </div>
-                            <p className="text-gray-600 text-sm">0914700123</p>
-                            <p className="text-gray-600 text-sm">
-                                115A , đường D2, huyện Củ Chi, Hồ Chí Minh
-                            </p>
+                            )}
                         </div>
-                        <hr className="mt-4" />
                     </div>
                 </div>
             </div>
