@@ -80,10 +80,9 @@ const handler = NextAuth({
                         await newUser.save(); // Save the new user to the database
                     }
                 } catch (error) {
-                    console.log(error)
+                    console.log(error);
                 }
             }
-
             return true;
         },
     },
