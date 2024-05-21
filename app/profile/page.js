@@ -1,15 +1,78 @@
-'use client';
-import { useState } from 'react';
-import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const ProfilePage = () => {
     //check authenticated
     const session = useSession();
+    console.log(session);
     const { status } = session;
+    const userEmail = session.data?.user.email;
 
+    const [name, setName] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [sex, setSex] = useState();
+    const [birthday, setBirthDay] = useState();
+    const [showPassword, setShowPassword] = useState(false);
+
+    async function getUser(email) {
+        try {
+            const res = await fetch(`/api/users/${email}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (res.ok) {
+                const user = await res.json();
+                console.log("User data:", user);
+
+                if (user) {
+                    const formattedDate = new Date(user.birthday)
+                        .toISOString()
+                        .slice(0, 10);
+
+                    setName(user.name);
+                    setPhoneNumber(user.phoneNumber);
+                    setBirthDay(formattedDate);
+                    setSex(user.sex);
+                } else {
+                    console.error("User not found or response is empty.");
+                }
+            } else {
+                console.error("Error fetching user:", res.statusText);
+            }
+        } catch (error) {
+            console.error("Error in fetch:", error);
+        }
+    }
+
+    useEffect(() => {
+        if (userEmail) {
+            getUser(userEmail);
+        }
+    }, [userEmail]);
+
+    async function handleClickSave(email) {
+        try {
+            const res = await fetch(`/api/users/${email}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, phoneNumber, sex, birthday }),
+            });
+
+            if (!res.ok) {
+                console.error("Error fetching user:", res.statusText);
+            }
+
+            console.log("Update successful");
+        } catch (error) {
+            console.error("Error in fetch:", error);
+        }
+    }
+
+    //check authenticated
     if (status === "loading") {
         return "Loading....";
     }
@@ -18,9 +81,6 @@ const ProfilePage = () => {
         return redirect("/login");
     }
 
-    
-    const [birthday, setBirthDay] = useState();
-    const [showPassword, setShowPassword] = useState(false);
     return (
         <div className="py-8">
             <h1 className="border-b py-6 text-3xl font-semibold">
@@ -68,7 +128,9 @@ const ProfilePage = () => {
                             Chính sách và câu hỏi thường gặp
                         </li>
                         <li
-                            onClick={() => {signOut({ callbackUrl: "/" });}}
+                            onClick={() => {
+                                signOut({ callbackUrl: "/" });
+                            }}
                             className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white"
                         >
                             Đăng xuất
@@ -145,7 +207,8 @@ const ProfilePage = () => {
                         type="text"
                         id="userName"
                         className="w-1/3 flex-shrink  border border-gray-300 bg-transparent py-2 px-4 text-base text-gray-700  focus:border-gray-400 focus:ring-gray-400 rounded "
-                        defaultValue={"Dung Le Quoc"}
+                        value={name}
+                        onChange={(ev) => setName(ev.target.value)}
                     />
                     <div className="flex items-center my-2">
                         <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
@@ -157,7 +220,10 @@ const ProfilePage = () => {
                                     <input
                                         id="PhoneNumber"
                                         className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
-                                        defaultValue={"0914700123"}
+                                        value={phoneNumber}
+                                        onChange={(ev) =>
+                                            setPhoneNumber(ev.target.value)
+                                        }
                                     />
                                 </div>
                             </label>
@@ -169,6 +235,10 @@ const ProfilePage = () => {
                                     <select
                                         id="gender"
                                         className="appearance-none w-full py-2 px-4 text-base text-gray-700 bg-white border-transparent focus:border-gray-300 focus:outline-none placeholder-gray-400 "
+                                        onChange={(ev) =>
+                                            setSex(ev.target.value)
+                                        }
+                                        value={sex}
                                     >
                                         <option value="" disabled selected>
                                             Chọn giới tính
@@ -190,21 +260,23 @@ const ProfilePage = () => {
                         type="date"
                         className="w-1/3 flex-shrink  border border-gray-300 bg-transparent py-2 px-4 text-base text-gray-700  focus:border-gray-400 focus:ring-gray-400 rounded "
                         onChange={(e) => setBirthDay(e.target.value)}
-                        defaultValue={birthday}
+                        value={birthday}
                     />
-
                     <p className="mt-10 py-2 text-2xl font-semibold">
                         Thông tin đăng nhập
                     </p>
                     <hr className="mt-4 mb-8" />
-                    <p className="py-2 font-semibold text-sm">Họ và tên</p>
+                    <p className="py-2 font-semibold text-sm">Email</p>
                     <input
                         type="email"
                         id="email"
                         className="w-1/3 flex-shrink  border border-gray-300 bg-transparent py-2 px-4 text-base text-gray-700  focus:border-gray-400 focus:ring-gray-400 rounded "
-                        defaultValue={"lequocdung2983@gmail.com"}
+                        disabled
+                        value={userEmail}
                     />
-                    <p className="py-2 font-semibold text-sm">Mật khẩu</p>
+
+                    {/* Password */}
+                    {/* <p className="py-2 font-semibold text-sm">Mật khẩu</p>
                     <div className="w-1/3 flex-shrink border border-gray-300 bg-transparent text-base text-gray-700 focus:border-gray-400 focus:ring-gray-400 rounded relative">
                         <input
                             type="password"
@@ -223,9 +295,12 @@ const ProfilePage = () => {
                                 onClick={() => setShowPassword(true)}
                             ></i>
                         )}
-                    </div>
+                    </div> */}
                     <div>
-                        <button className="my-8 rounded-lg bg-primary hover:bg-hoverColor px-4 py-2 text-white">
+                        <button
+                            className="my-8 rounded-lg bg-primary hover:bg-hoverColor px-4 py-2 text-white"
+                            onClick={() => handleClickSave(userEmail)}
+                        >
                             Lưu thông tin
                         </button>
                     </div>

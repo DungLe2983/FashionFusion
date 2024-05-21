@@ -23,7 +23,15 @@ const UserSchema = new Schema(
             default: "",
         },
         address: {
+            type: [String],
+            default: [],
+        },
+        sex: {
             type: String,
+            default: "",
+        },
+        birthday: {
+            type: Date,
             default: "",
         },
     },

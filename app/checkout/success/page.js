@@ -1,7 +1,21 @@
 import Link from 'next/link';
 import React from 'react';
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const SuccessCheckout = () => {
+
+    const session = useSession();
+    const { status } = session;
+
+    if (status === "loading") {
+        return "Loading....";
+    }
+
+    if (status === "unauthenticated") {
+        return redirect("/login");
+    }
+    
     return (
         <div className='text-center flex flex-col gap-2 '>
             <i className='ri-shield-check-fill mt-8 text-4xl text-primary'></i>
