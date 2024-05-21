@@ -23,11 +23,21 @@ const handler = NextAuth({
                 password: {},
             },
             async authorize(credentials, req) {
-                // await mongoose.connect(process.env.MONGO_URL);
+                if (
+                    !credentials ||
+                    !credentials.email ||
+                    !credentials.password
+                ) {
+                    return null;
+                }
+
                 await dbConnect();
 
                 const user = await User.findOne({ email: credentials?.email });
-                const email = credentials.email;
+
+                if (!user) {
+                    return null;
+                }
 
                 const passwordCorrect = await compare(
                     credentials?.password || "",
@@ -35,11 +45,12 @@ const handler = NextAuth({
                 );
 
                 if (passwordCorrect) {
-                    console.log({ user });
-                    return {
+                    const oUser = {
                         id: user.id,
                         email: user.email,
+                        name: user.name,
                     };
+                    return oUser;
                 }
 
                 return null;
@@ -48,7 +59,6 @@ const handler = NextAuth({
     ],
     callbacks: {
         async signIn({ account, profile }) {
-            // await mongoose.connect(process.env.MONGO_URL);
             await dbConnect();
 
             if (account.provider === "google") {
@@ -57,11 +67,6 @@ const handler = NextAuth({
                 }
 
                 try {
-                    // await User.findOneAndUpdate(
-                    //     { email: profile.email },
-                    //     { name: profile.name },
-                    //     { upsert: true }
-                    // );
                     const user = await User.findOne({ email: profile.email });
 
                     if (user) {
@@ -79,6 +84,14 @@ const handler = NextAuth({
 
                         await newUser.save(); // Save the new user to the database
                     }
+
+                    const oUser = {
+                        id: user.id,
+                        email: user.email,
+                        name: user.name,
+                    };
+                    console.log("oUser Gmail:", oUser);
+                    return oUser;
                 } catch (error) {
                     console.log(error);
                 }
