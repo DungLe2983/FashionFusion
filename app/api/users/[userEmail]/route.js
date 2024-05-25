@@ -1,6 +1,6 @@
-import User from "@/app/models/User";
-import dbConnect from "@/app/utils/db";
-import { NextResponse } from "next/server";
+import User from '../../../models/User';
+import dbConnect from '../../../utils/db';
+import { NextResponse } from 'next/server';
 
 export async function GET(req, context) {
     try {
@@ -38,7 +38,7 @@ export async function PUT(req, { params }) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not found", email: email },
+                { error: 'User not found', email: email },
                 { status: 404 }
             );
         }
@@ -56,16 +56,16 @@ export async function PATCH(req, { params }) {
         const email = params.userEmail;
         const data = await req.json();
 
-        if (!data || typeof data.address !== "string") {
+        if (!data || typeof data.address !== 'string') {
             return NextResponse.json(
-                { error: "Invalid address provided." },
+                { error: 'Invalid address provided.' },
                 { status: 400 }
             );
         }
 
         if (!data) {
             return NextResponse.json(
-                { error: "No address provided." },
+                { error: 'No address provided.' },
                 { status: 400 }
             );
         }
@@ -74,7 +74,7 @@ export async function PATCH(req, { params }) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not found." },
+                { error: 'User not found.' },
                 { status: 404 }
             );
         }
@@ -96,9 +96,9 @@ export async function DELETE(req, { params }) {
         const email = params.userEmail; // Nhận email từ tham số URL
         const data = await req.json(); // Nhận địa chỉ cần xóa từ body
 
-        if (typeof data.address !== "string") {
+        if (typeof data.address !== 'string') {
             return NextResponse.json(
-                { error: "Address to delete must be a string." },
+                { error: 'Address to delete must be a string.' },
                 { status: 400 }
             );
         }
@@ -108,7 +108,7 @@ export async function DELETE(req, { params }) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not found." },
+                { error: 'User not found.' },
                 { status: 404 }
             );
         }
@@ -118,7 +118,7 @@ export async function DELETE(req, { params }) {
         if (index === -1) {
             // Nếu địa chỉ không tồn tại trong mảng
             return NextResponse.json(
-                { error: "Address not found." },
+                { error: 'Address not found.' },
                 { status: 404 }
             );
         }
@@ -129,11 +129,11 @@ export async function DELETE(req, { params }) {
         await user.save();
 
         return NextResponse.json(
-            { message: "Address deleted successfully." },
+            { message: 'Address deleted successfully.' },
             { status: 200 }
         );
     } catch (error) {
-        console.error("Error deleting address:", error);
+        console.error('Error deleting address:', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

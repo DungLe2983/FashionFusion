@@ -5,7 +5,8 @@ import { Inter } from "next/font/google";
 import { AppProvider } from "./components/AppContext";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from 'react-hot-toast';
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,14 +17,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en">
+        <html lang='en'>
             <body className={inter.className}>
-                <main className=" max-w-7xl mx-auto p-4">
+                <main className=' max-w-7xl mx-auto p-4'>
                     <AppProvider>
                         <Header />
                         {children}
-                        <Toaster />
                         <Footer />
+                        <Toaster position='bottom-right' />
                     </AppProvider>
                 </main>
             </body>
