@@ -1,9 +1,11 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
+import "remixicon/fonts/remixicon.css";
+
+import { Inter } from "next/font/google";
 import { AppProvider } from "./components/AppContext";
 import Header from "./components/layout/Header";
-import "remixicon/fonts/remixicon.css";
 import Footer from "./components/layout/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +22,7 @@ export default function RootLayout({ children }) {
                     <AppProvider>
                         <Header />
                         {children}
+                        <Toaster />
                         <Footer />
                     </AppProvider>
                 </main>

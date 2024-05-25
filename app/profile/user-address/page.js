@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-
+import { useToast } from "@/components/ui/use-toast";
 import Address from "@/app/components/Address";
 
 const UserAddressPage = () => {
     const [userData, setUserData] = useState(null);
 
+    const { toast } = useToast();
     const session = useSession();
     const email = session.data?.user.email;
 
@@ -36,11 +37,19 @@ const UserAddressPage = () => {
     function deleteAddress() {
         //using API to delete Address
         console.log("delete address!!", email);
+        toast({
+            variant: "destructive",
+            title: "Delete successfully",
+        });
     }
 
     function changeAddress() {
         //using API to change Address
         console.log("change Address!!", email);
+        toast({
+            variant: "success",
+            title: "Update successfully",
+        });
     }
 
     function addNewAddress() {
