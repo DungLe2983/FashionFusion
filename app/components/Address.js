@@ -1,5 +1,6 @@
 import React from 'react';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const Address = ({ address, onChange, email, onDeleteSuccess }) => {
     if (!address) {
@@ -7,23 +8,43 @@ const Address = ({ address, onChange, email, onDeleteSuccess }) => {
     }
 
     async function handleDelete(email, address) {
-        console.log('address: ', address);
-
         try {
-            const res = await fetch(`/api/users/${email}/addresses`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ address: address }),
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Bạn có chắc chắn xóa địa chỉ này ra khỏi danh sách địa chỉ không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const res = await fetch(
+                            `/api/users/${email}/addresses`,
+                            {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ address: address }),
+                            }
+                        );
+                        if (res.ok) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'Xóa địa chỉ thành công!',
+                                icon: 'success',
+                            });
+                            onDeleteSuccess(address);
+                        } else {
+                            toast.error('Delete Adress failed');
+                        }
+                    } catch (ex) {
+                        console.log(ex);
+                    }
+                }
             });
-
-            if (res.ok) {
-                toast.success('Xóa địa chỉ thành công!');
-                onDeleteSuccess(address);
-            } else {
-                toast.error('Lỗi xóa');
-            }
         } catch (err) {
             toast.error(err);
         }
