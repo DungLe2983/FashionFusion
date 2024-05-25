@@ -1,15 +1,16 @@
-import mongoose from "mongoose";
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import { compare } from "bcrypt";
-import User from "../../../models/User";
-import dbConnect from "@/app/utils/db";
+import mongoose from 'mongoose';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import { compare } from 'bcrypt';
+import User from '../../../models/User';
+// import dbConnect from "@/app/utils/db";
+import dbConnect from '../../../utils/db';
 
 const handler = NextAuth({
     secret: process.env.SECRET,
     session: {
-        strategy: "jwt",
+        strategy: 'jwt',
     },
     providers: [
         GoogleProvider({
@@ -17,7 +18,7 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
         CredentialsProvider({
-            name: "Credentials",
+            name: 'Credentials',
             credentials: {
                 email: {},
                 password: {},
@@ -40,7 +41,7 @@ const handler = NextAuth({
                 }
 
                 const passwordCorrect = await compare(
-                    credentials?.password || "",
+                    credentials?.password || '',
                     user.password
                 );
 
@@ -61,9 +62,9 @@ const handler = NextAuth({
         async signIn({ account, profile }) {
             await dbConnect();
 
-            if (account.provider === "google") {
+            if (account.provider === 'google') {
                 if (!profile || !profile.email) {
-                    throw new Error("No profile");
+                    throw new Error('No profile');
                 }
 
                 try {
@@ -90,7 +91,7 @@ const handler = NextAuth({
                         email: user.email,
                         name: user.name,
                     };
-                    console.log("oUser Gmail:", oUser);
+                    console.log('oUser Gmail:', oUser);
                     return oUser;
                 } catch (error) {
                     console.log(error);
