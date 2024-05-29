@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
     //check authenticated
@@ -15,7 +16,6 @@ const ProfilePage = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [sex, setSex] = useState();
     const [birthday, setBirthDay] = useState();
-    const [showPassword, setShowPassword] = useState(false);
 
     async function getUser(email) {
         try {
@@ -26,7 +26,6 @@ const ProfilePage = () => {
 
             if (res.ok) {
                 const user = await res.json();
-                console.log("User data:", user);
 
                 if (user) {
                     const formattedDate = new Date(user.birthday)
@@ -55,6 +54,11 @@ const ProfilePage = () => {
     }, [userEmail]);
 
     async function handleClickSave(email) {
+        if (!/^\d{10}$/.test(phoneNumber)) {
+            toast.error("Số điện thoại phải có đủ 10 kí tự chữ số.");
+            return;
+        }
+
         try {
             const res = await fetch(`/api/users/${email}`, {
                 method: "PUT",
@@ -66,9 +70,10 @@ const ProfilePage = () => {
                 console.error("Error fetching user:", res.statusText);
             }
 
-            console.log("Update successful");
+            toast.success("Cập nhật thành công!");
         } catch (error) {
             console.error("Error in fetch:", error);
+            toast.error(error);
         }
     }
 

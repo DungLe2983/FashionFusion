@@ -1,97 +1,48 @@
-import Image from 'next/image';
-import React from 'react';
-import ProductCard from './ProductCard';
+import Image from "next/image";
+import React from "react";
+import ProductCard from "./ProductCard";
+import dbConnect from "../../utils/db";
+import Product from "../../models/product";
+import ProductItem from "../../models/product-item";
+import Category from "../../models/category";
 
-const filterProducts = [
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrai11_19.jpg',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang4_22.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Logo Trái V1',
-        subtitle: '100% Cotton / Đen',
-        price: '399.000đ',
-        rate: '5',
-    },
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunartqyay2_72.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Chơi Quay',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang7_23.jpg',
-        subtitle: 'Care & Share / Đen Trắng',
-        price: '399.000đ',
-        rate: '5',
-    },
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/oantuti1_2.jpg',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang3_40.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Oẳn Tù Tì',
-        subtitle: 'Care & Share / Trắng',
-        price: '299.000đ',
-        rate: '5',
-    },
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrai11_19.jpg',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang4_22.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Logo Trái V1',
-        subtitle: '100% Cotton / Đen',
-        price: '399.000đ',
-        rate: '5',
-    },
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunartqyay2_72.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Chơi Quay',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang7_23.jpg',
-        subtitle: 'Care & Share / Đen Trắng',
-        price: '399.000đ',
-        rate: '5',
-    },
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/oantuti1_2.jpg',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang3_40.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Oẳn Tù Tì',
-        subtitle: 'Care & Share / Trắng',
-        price: '299.000đ',
-        rate: '5',
-    },
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunartqyay2_72.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Chơi Quay',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang7_23.jpg',
-        subtitle: 'Care & Share / Đen Trắng',
-        price: '399.000đ',
-        rate: '5',
-    },
-    {
-        image: 'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/oantuti1_2.jpg',
-        hoverImage:
-            'https://mcdn2.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85/uploads/February2024/vunarttrang3_40.jpg',
-        name: 'Áo thun Cotton Compact In Lụa VỤN ART Oẳn Tù Tì',
-        subtitle: 'Care & Share / Trắng',
-        price: '299.000đ',
-        rate: '5',
-    },
-    //...
-];
-const ProductSection = () => {
+const ProductSection = async () => {
+    await dbConnect();
+    const products = await Product.find().populate("product_item_id");
+    console.log(products[0]);
+
     return (
-        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12'>
-            {filterProducts.map((product, index) => (
-                <ProductCard
-                    key={index}
-                    image={product.image}
-                    hoverImage={product.hoverImage}
-                    name={product.name}
-                    subtitle={product.subtitle}
-                    price={product.price}
-                    rate={product.rate}
-                />
-            ))}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+            {products.map((product, index) => {
+                const productItems = product.product_item_id;
+                let minPrice = 1;
 
+                if (productItems || Array.isArray(productItems)) {
+                    minPrice = Math.min(
+                        ...productItems.map((item) => item.price)
+                    );
+                }
+
+                return (
+                    <ProductCard
+                        key={index}
+                        image={product.image}
+                        hoverImage={product.image}
+                        name={product.name}
+                        subtitle={
+                            product.description.length > 20
+                                ? `${product.description.substring(0, 70)}...`
+                                : product.description
+                        }
+                        price={
+                            <span>
+                                {minPrice === Infinity ? "0₫" : `${minPrice}₫`}
+                            </span>
+                        }
+                        rate={"1*"}
+                    />
+                );
+            })}
         </div>
     );
 };
