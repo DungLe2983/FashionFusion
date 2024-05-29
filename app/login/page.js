@@ -30,6 +30,7 @@ export default function LoginPage() {
             password,
             redirect: false,
         });
+        console.log("res credentials:", res);
 
         if (res.ok) {
             router.push("/");

@@ -1,15 +1,16 @@
-import mongoose from "mongoose";
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import { compare } from "bcrypt";
-import User from "../../../models/User";
-import dbConnect from "@/app/utils/db";
+import mongoose from 'mongoose';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import { compare } from 'bcrypt';
+import User from '../../../models/User';
+// import dbConnect from "@/app/utils/db";
+import dbConnect from '../../../utils/db';
 
 const handler = NextAuth({
     secret: process.env.SECRET,
     session: {
-        strategy: "jwt",
+        strategy: 'jwt',
     },
     providers: [
         GoogleProvider({
@@ -17,29 +18,40 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
         CredentialsProvider({
-            name: "Credentials",
+            name: 'Credentials',
             credentials: {
                 email: {},
                 password: {},
             },
             async authorize(credentials, req) {
-                // await mongoose.connect(process.env.MONGO_URL);
+                if (
+                    !credentials ||
+                    !credentials.email ||
+                    !credentials.password
+                ) {
+                    return null;
+                }
+
                 await dbConnect();
 
                 const user = await User.findOne({ email: credentials?.email });
-                const email = credentials.email;
+
+                if (!user) {
+                    return null;
+                }
 
                 const passwordCorrect = await compare(
-                    credentials?.password || "",
+                    credentials?.password || '',
                     user.password
                 );
 
                 if (passwordCorrect) {
-                    console.log({ user });
-                    return {
+                    const oUser = {
                         id: user.id,
                         email: user.email,
+                        name: user.name,
                     };
+                    return oUser;
                 }
 
                 return null;
@@ -48,20 +60,14 @@ const handler = NextAuth({
     ],
     callbacks: {
         async signIn({ account, profile }) {
-            // await mongoose.connect(process.env.MONGO_URL);
             await dbConnect();
 
-            if (account.provider === "google") {
+            if (account.provider === 'google') {
                 if (!profile || !profile.email) {
-                    throw new Error("No profile");
+                    throw new Error('No profile');
                 }
 
                 try {
-                    // await User.findOneAndUpdate(
-                    //     { email: profile.email },
-                    //     { name: profile.name },
-                    //     { upsert: true }
-                    // );
                     const user = await User.findOne({ email: profile.email });
 
                     if (user) {
@@ -79,6 +85,14 @@ const handler = NextAuth({
 
                         await newUser.save(); // Save the new user to the database
                     }
+
+                    const oUser = {
+                        id: user.id,
+                        email: user.email,
+                        name: user.name,
+                    };
+                    console.log('oUser Gmail:', oUser);
+                    return oUser;
                 } catch (error) {
                     console.log(error);
                 }

@@ -173,7 +173,7 @@ const FaQPage = () => {
                         </p>
                         <p className="mt-4 text-gray-600 text-[14px] ">
                             – Hàng mua online (thông qua webiste, Shopee,
-                            Lazada): liên hệ fanpage Teelab để được hướng dẫn
+                            Lazada): liên hệ fanpage để được hướng dẫn
                             đổi trả
                         </p>
                         <p className="font-semibold mt-4">
