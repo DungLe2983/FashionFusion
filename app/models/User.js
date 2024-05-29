@@ -9,7 +9,6 @@ const UserSchema = new Schema(
         },
         password: {
             type: String,
-            // require: true,
         },
         name: {
             type: String,
@@ -33,6 +32,10 @@ const UserSchema = new Schema(
         birthday: {
             type: Date,
             default: "",
+        },
+        cart_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Cart",
         },
     },
     { timestamps: true }
