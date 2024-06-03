@@ -9,7 +9,7 @@ import Category from "../../models/category";
 const ProductSection = async () => {
     await dbConnect();
     const products = await Product.find().populate("product_item_id");
-    console.log(products[0]);
+    // console.log(products[0]);
 
     return (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
@@ -40,6 +40,7 @@ const ProductSection = async () => {
                             </span>
                         }
                         rate={"1*"}
+                        id={product.id}
                     />
                 );
             })}

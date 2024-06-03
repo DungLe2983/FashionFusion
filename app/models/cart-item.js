@@ -2,11 +2,11 @@ import mongoose, { model, models, Schema } from "mongoose";
 
 const CartItemSchema = new Schema(
     {
-        shopping_cart_id: {
+        cart_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Cart",
         },
-        product_id: {
+        product_item_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "ProductItem",
         },
