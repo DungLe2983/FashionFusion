@@ -1,7 +1,15 @@
-'use client';
-import Link from 'next/link';
-import { useState } from 'react';
-const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
+"use client";
+import Link from "next/link";
+import { useState } from "react";
+const ProductCard = ({
+    image,
+    hoverImage,
+    name,
+    subtitle,
+    price,
+    rate,
+    id,
+}) => {
     const [isHovered, setIsHovered] = useState(false);
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -10,51 +18,51 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
         setIsHovered(false);
     };
     return (
-        <div className=' relative overflow-hidden group transition shadow-lg'>
+        <div className=" relative overflow-hidden group transition shadow-lg">
             <div
-                className='max-w-xs rounded overflow-hidden  '
+                className="max-w-xs rounded overflow-hidden  "
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
                 <img
-                    className='w-full h-96 object-cover cursor-pointer'
+                    className="w-full h-96 object-cover cursor-pointer"
                     src={isHovered ? hoverImage : image}
                     alt={name}
                     onMouseEnter={handleMouseEnter}
                 />
-                <div className='px-6 py-4'>
+                <div className="px-6 py-4">
                     <Link
-                        href={'/products/id'}
-                        className='font-bold text-base mb-2 cursor-pointer hover:text-primary '
+                        href={`/${id}`}
+                        className="font-bold text-base mb-2 cursor-pointer hover:text-primary "
                     >
                         {name}
                     </Link>
-                    <p className='text-gray-600 text-sm mt-2'>{subtitle}</p>
+                    <p className="text-gray-600 text-sm mt-2">{subtitle}</p>
                 </div>
-                <div className='px-6 py-4 flex justify-between'>
-                    <p className='text-gray-900 font-semibold text-base'>
+                <div className="px-6 py-4 flex justify-between">
+                    <p className="text-gray-900 font-semibold text-base">
                         {price}
                     </p>
-                    <p className='flex gap-2 items-center mr-2 text-sm'>
-                        <i className='ri-star-fill text-yellow-400'></i>
-                        <span className='font-semibold'>{rate}</span>
+                    <p className="flex gap-2 items-center mr-2 text-sm">
+                        <i className="ri-star-fill text-yellow-400"></i>
+                        <span className="font-semibold">{rate}</span>
                     </p>
                 </div>
             </div>
-            <div className='absolute top-6 -right-11 group-hover:right-0 md:group-hover:right-3 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300'>
+            <div className="absolute top-6 -right-11 group-hover:right-0 md:group-hover:right-3 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <button>
-                    <div className='h-8 w-8 md:h-12 md:w-12 flex justify-center items-center text-white bg-primary'>
-                        <i className='ri-shopping-cart-2-line text-sm md:text-xl '></i>
+                    <div className="h-8 w-8 md:h-12 md:w-12 flex justify-center items-center text-white bg-primary">
+                        <i className="ri-shopping-cart-2-line text-sm md:text-xl "></i>
                     </div>
                 </button>
                 <Link
-                    href={'/productDetail'}
-                    className='bg-white h-8 w-8 md:h-12 md:w-12 flex justify-center items-center text-black drop-shadow-xl'
+                    href={"/productDetail"}
+                    className="bg-white h-8 w-8 md:h-12 md:w-12 flex justify-center items-center text-black drop-shadow-xl"
                 >
-                    <i className='ri-eye-fill text-sm md:text-xl'></i>
+                    <i className="ri-eye-fill text-sm md:text-xl"></i>
                 </Link>
             </div>
-            <span className='absolute top-0 left-0 m-2 md:m-4 bg-white border  px-3 py-1 text-center text-xs font-medium text-red-600'>
+            <span className="absolute top-0 left-0 m-2 md:m-4 bg-white border  px-3 py-1 text-center text-xs font-medium text-red-600">
                 39% OFF
             </span>
         </div>
