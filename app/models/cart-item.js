@@ -1,14 +1,14 @@
-import mongoose, { model, models, Schema } from "mongoose";
+import mongoose, { model, models, Schema } from 'mongoose';
 
 const CartItemSchema = new Schema(
     {
-        shopping_cart_id: {
+        cart_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Cart",
+            ref: 'Cart',
         },
-        product_id: {
+        product_item_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "ProductItem",
+            ref: 'ProductItem',
         },
         item_quantity: {
             type: Number,
@@ -17,5 +17,5 @@ const CartItemSchema = new Schema(
     { timestamps: true }
 );
 
-const CartItem = models?.CartItem || model("CartItem", CartItemSchema);
+const CartItem = models?.CartItem || model('CartItem', CartItemSchema);
 export default CartItem;
