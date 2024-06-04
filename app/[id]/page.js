@@ -38,12 +38,12 @@ const ProductDetailPage = ({ params }) => {
     };
 
     return (
-        <section className="pt-12 pb-12 lg:py-4 h-full flex flex-col items-center">
+        <section className="pt-12 pb-12 lg:py-8 h-full flex flex-col items-center">
             <div className="container mx-auto">
-                <div className="flex flex-col gap-6 md:flex-row ">
+                <div className="flex flex-col gap-8 md:flex-row ">
                     <ProductImages image={product?.image} />
                     <div className="text-left ">
-                        <h2 className="text-xl md:text-2xl font-medium mb-2  max-w-[450px] mx-auto lg:mx-0">
+                        <h2 className="text-xl md:text-2xl font-medium ">
                             {product?.name}
                         </h2>
                         <div className="my-2 text-xl text-yellow-400 flex  items-center gap-1">
@@ -57,7 +57,7 @@ const ProductDetailPage = ({ params }) => {
                             {price}đ
                         </div>
                         <p className="font-semibold text-sm">Mô tả:</p>
-                        <p className="my-2">{product?.description}</p>
+                        <p className="my-2 md:max-w-xl">{product?.description}</p>
 
                         {product && (
                             <>

@@ -1,10 +1,10 @@
 const ProductImages = (image) => {
     return (
-        <div className="flex justify-start md:justify-center items-center mb-8 lg:mb-0">
+        <div className='md:h-[30rem] md:w-[30rem] '>
             <img
-                className="max-w-[screen] md:max-w-sm lg:max-w-xl h-[38rem] w-[38rem] object-cover"
+                className='h-full w-full object-cover'
                 src={image.image}
-                alt="img"
+                alt='img'
             />
         </div>
     );
