@@ -1,18 +1,24 @@
-import Image from "next/image";
-import React from "react";
-import ProductCard from "./ProductCard";
-import dbConnect from "../../utils/db";
-import Product from "../../models/product";
-import ProductItem from "../../models/product-item";
-import Category from "../../models/category";
+import React from 'react';
+import ProductCard from './ProductCard';
+import dbConnect from '../../utils/db';
+import Product from '../../models/product';
+import ProductItem from '../../models/product-item';
+import { headers } from 'next/headers';
 
 const ProductSection = async () => {
+    const headersList = headers();
+    const fullUrl = headersList.get('referer') || '';
+
+    const url = new URL(fullUrl);
+    const page = url.searchParams.get('page');
+
+    console.log('page========', page); // Kết quả: "1"
+
     await dbConnect();
-    const products = await Product.find().populate("product_item_id");
-    // console.log(products[0]);
+    const products = await Product.find().populate('product_item_id');
 
     return (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12'>
             {products.map((product, index) => {
                 const productItems = product.product_item_id;
                 let minPrice = 1;
@@ -36,10 +42,12 @@ const ProductSection = async () => {
                         }
                         price={
                             <span>
-                                {minPrice === Infinity ? "0₫" : `${minPrice}₫`}
+                                {minPrice === Infinity
+                                    ? '0₫'
+                                    : `${minPrice.toLocaleString()} ₫`}
                             </span>
                         }
-                        rate={"1*"}
+                        rate={'1*'}
                         id={product.id}
                     />
                 );
