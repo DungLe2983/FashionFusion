@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
-const ProductInCart = () => {
+const ProductInCart = (props) => {
+    const [cartItems, setCartItems] = useState([]);
+    // tìm các cartItem có cartId đã lấy được
+    useEffect(() => {
+        const fetchCartItems = async () => {
+            try {
+                const response = await fetch(`/api/cart-item/${props.cartId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
+                const data = await response.json();
+                setCartItems(data);
+            } catch (error) {
+                console.error("Failed to fetch cart items:", error);
+            }
+        };
+
+        fetchCartItems();
+    }, [props]);
     return (
-        <div className='flex gap-2'>
+        <div className="flex gap-2">
             <img
-                className='w-32 h-32'
-                src='https://bizweb.dktcdn.net/thumb/compact/100/415/697/products/img-9367-1-56fef4f6-017a-4b12-96d8-fd10130f041b.jpg'
-                alt='productInCartImg'
+                className="w-32 h-32"
+                src={cartItems[0].product_item_id.product_id.image[0]}
+                alt="productInCartImg"
             />
-            <div className='flex flex-col gap-2 justify-center text-sm'>
-                <p className=' cursor-pointer hover:text-primary font-semibold'>
-                    Áo Thun Teelab Local Brand Unisex Holiday special " Lướt
-                    sóng " Tshirt TS237
+            <div className="flex flex-col gap-2 justify-center text-sm">
+                <p className=" cursor-pointer hover:text-primary font-semibold">
+                    {cartItems[0].product_item_id.product_id.name}
                 </p>
-                <p>Kem / M</p>
+                <p>
+                    {cartItems[0].product_item_id.color_id.name} /{" "}
+                    {cartItems[0].product_item_id.size_id.name}
+                </p>
             </div>
         </div>
     );

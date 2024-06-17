@@ -1,22 +1,110 @@
-'use client';
-import React, { useState } from 'react';
-import { TableProductInCart } from '../components/layout/TableProductInCart';
-import Link from 'next/link';
+"use client";
+import React, { useEffect, useState } from "react";
+import { TableProductInCart } from "../components/layout/TableProductInCart";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 const CartPage = () => {
-    //check authenticated
+    const [cartItems, setCartItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+
     const session = useSession();
     const { status } = session;
 
+    // Tìm cartId từ email
+    const [cartId, setCartId] = useState("");
+    const userEmail = session.data?.session.user.email;
+
+    const getCart = async (email) => {
+        try {
+            const res = await fetch(`/api/users/${email}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (res.ok) {
+                const user = await res.json();
+                const userId = user._id;
+
+                if (userId) {
+                    try {
+                        const response = await fetch("/api/cart", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ user_id: userId }),
+                        });
+
+                        if (response.ok) {
+                            const cart = await response.json();
+                            if (cart) {
+                                setCartId(cart._id);
+                            }
+                        } else {
+                            console.error(
+                                "Error fetching cart:",
+                                response.statusText
+                            );
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                    }
+                } else {
+                    console.error("User not found or response is empty.");
+                }
+            } else {
+                console.error("Error fetching user:", res.statusText);
+            }
+        } catch (error) {
+            console.error("Error in fetch:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (userEmail) {
+            getCart(userEmail);
+        }
+        if (cartId) {
+            const fetchCartItems = async () => {
+                try {
+                    const response = await fetch(`/api/cart-item/${cartId}`);
+                    if (!response.ok) {
+                        throw new Error(
+                            `HTTP error status: ${response.status}`
+                        );
+                    }
+                    const data = await response.json();
+                    setCartItems(data);
+                } catch (error) {
+                    console.error("Failed to fetch cart items:", error);
+                }
+            };
+
+            fetchCartItems();
+        }
+    }, [userEmail, cartId]);
+
+    useEffect(() => {
+        if (cartItems.length > 0) {
+            let total = 0;
+            cartItems.forEach((item) => {
+                total += item.product_item_id.price * item.item_quantity; // Giả sử mỗi item có thuộc tính price và quantity
+            });
+            setTotalPrice(total);
+        }
+    }, [cartItems]);
+
+    // Check authenticated
     if (status === "loading") {
-        return "Loading...."
+        return "Loading....";
     }
 
     if (status === "unauthenticated") {
         return redirect("/login");
     }
+
     return (
         <div>
             <h2 className="text-center font-bold text-3xl mt-8">
@@ -45,9 +133,10 @@ const CartPage = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <TableProductInCart />
-                        <TableProductInCart />
-                        <TableProductInCart />
+                        {/* <TableProductInCart /> */}
+                        {cartItems.map((item, index) => (
+                            <TableProductInCart key={index} item={item} />
+                        ))}
                     </table>
                 </div>
                 <div className="mt-6 flex justify-end">
@@ -57,7 +146,7 @@ const CartPage = () => {
                                 Tổng tiền:
                             </p>
                             <span className="text-red-500 font-semibold text-xl">
-                                1.650.000đ
+                                {totalPrice.toLocaleString()}đ
                             </span>
                         </div>
                         <Link

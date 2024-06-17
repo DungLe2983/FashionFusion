@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const CustomizeProducts = (pros) => {
     //Customize
@@ -11,7 +12,58 @@ const CustomizeProducts = (pros) => {
     const [quantity, setQuantity] = useState(1);
     const [stock, setStock] = useState(1);
 
-    //fetch data
+    // get cartID
+    const session = useSession();
+    const userEmail = session.data?.session.user.email;
+    const [cartId, setCartId] = useState("");
+
+    const getCart = async (email) => {
+        try {
+            const res = await fetch(`/api/users/${email}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (res.ok) {
+                const user = await res.json();
+                const userId = user._id;
+
+                if (userId) {
+                    try {
+                        const response = await fetch("/api/cart", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ user_id: userId }),
+                        });
+
+                        if (response.ok) {
+                            const cart = await response.json();
+                            if (cart) {
+                                setCartId(cart._id);
+                            }
+                        } else {
+                            console.error(
+                                "Error fetching cart:",
+                                response.statusText
+                            );
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                    }
+                } else {
+                    console.error("User not found or response is empty.");
+                }
+            } else {
+                console.error("Error fetching user:", res.statusText);
+            }
+        } catch (error) {
+            console.error("Error in fetch:", error);
+        }
+    };
+
+    //fetch product item data
     const fetchItems = async () => {
         let combinedItems = [];
 
@@ -42,7 +94,10 @@ const CustomizeProducts = (pros) => {
 
     useEffect(() => {
         fetchItems();
-    }, []);
+        if (userEmail) {
+            getCart(userEmail);
+        }
+    }, [userEmail]);
 
     const handleSizeClick = (sizeDescription, sizeId) => {
         setSelectedSize(sizeDescription);
@@ -70,8 +125,6 @@ const CustomizeProducts = (pros) => {
     };
 
     const handleColorClick = (color, id, size_name) => {
-        // console.log("id san pham: ", id, "size", size_name);
-
         setSelectedColor(color);
         const itemStock = items.filter((item) => item._id == id);
         setQuantity(1);
@@ -137,7 +190,7 @@ const CustomizeProducts = (pros) => {
         return null;
     });
 
-    // //Confirm
+    // Select quantity
     const handleQuantity = function (type) {
         if (type === "d" && quantity > 1) {
             setQuantity((prev) => prev - 1);
@@ -148,7 +201,8 @@ const CustomizeProducts = (pros) => {
         }
     };
 
-    const handleAddClick = () => {
+    // Add to cart click
+    const handleAddClick = async () => {
         const selectedItem = items.find(
             (item) =>
                 item.size_id.description === selectedSize &&
@@ -156,8 +210,36 @@ const CustomizeProducts = (pros) => {
         );
 
         if (selectedItem) {
-            console.log("Selected Item ID:", selectedItem._id);
-            console.log("Selected Quantity:", quantity);
+            console.log(
+                "Selected Item ID:",
+                selectedItem._id,
+                ", Selected Quantity:",
+                quantity,
+                ", Cart_id:",
+                cartId
+            );
+            try {
+                const res = await fetch("/api/cart-item", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        cart_id: cartId,
+                        product_item_id: selectedItem._id,
+                        item_quantity: quantity,
+                    }),
+                });
+
+                if (res.ok) {
+                    const respone = await res.json();
+                    console.log("respone:", respone);
+                } else {
+                    console.error("Error fetching cart:", res.statusText);
+                }
+            } catch (error) {
+                console.error("Error in fetch:", error);
+            }
         } else {
             console.log("No item selected");
         }
