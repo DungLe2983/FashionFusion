@@ -1,16 +1,16 @@
-import mongoose from 'mongoose';
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import GoogleProvider from 'next-auth/providers/google';
-import { compare } from 'bcrypt';
-import User from '../../../models/User';
-// import dbConnect from "@/app/utils/db";
-import dbConnect from '../../../utils/db';
+import mongoose from "mongoose";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { compare } from "bcrypt";
+import User from "../../../models/User";
+import Cart from "../../../models/cart";
+import dbConnect from "../../../utils/db";
 
 const handler = NextAuth({
     secret: process.env.SECRET,
     session: {
-        strategy: 'jwt',
+        strategy: "jwt",
     },
     providers: [
         GoogleProvider({
@@ -18,7 +18,7 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
         CredentialsProvider({
-            name: 'Credentials',
+            name: "Credentials",
             credentials: {
                 email: {},
                 password: {},
@@ -41,7 +41,7 @@ const handler = NextAuth({
                 }
 
                 const passwordCorrect = await compare(
-                    credentials?.password || '',
+                    credentials?.password || "",
                     user.password
                 );
 
@@ -62,9 +62,9 @@ const handler = NextAuth({
         async signIn({ account, profile }) {
             await dbConnect();
 
-            if (account.provider === 'google') {
+            if (account.provider === "google") {
                 if (!profile || !profile.email) {
-                    throw new Error('No profile');
+                    throw new Error("No profile");
                 }
 
                 try {
@@ -77,13 +77,21 @@ const handler = NextAuth({
                             { $set: { name: profile.name } }
                         );
                     } else {
-                        // If no user is found, create a new one
+                        // Nếu tìm không thấy người dùng, tạo mới
                         const newUser = new User({
                             email: profile.email,
                             name: profile.name,
                         });
 
-                        await newUser.save(); // Save the new user to the database
+                        await newUser.save();
+
+                        // Tạo mới Cart cho người dùng mới
+                        const newCart = new Cart({
+                            user_id: newUser._id,
+                            cart_items: [],
+                        });
+
+                        await newCart.save();
                     }
 
                     const oUser = {
@@ -91,13 +99,16 @@ const handler = NextAuth({
                         email: user.email,
                         name: user.name,
                     };
-                    console.log('oUser Gmail:', oUser);
+                    console.log("oUser Gmail:", oUser);
                     return oUser;
                 } catch (error) {
                     console.log(error);
                 }
             }
             return true;
+        },
+        async session(session, user) {
+            return session;
         },
     },
 });

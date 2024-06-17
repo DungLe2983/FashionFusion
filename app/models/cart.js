@@ -7,10 +7,12 @@ const CartSchema = new Schema(
             ref: "User",
             required: true,
         },
-        cart_item_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "CartItem",
-        },
+        cart_item_id: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "CartItem",
+            },
+        ],
     },
     { timestamps: true }
 );
