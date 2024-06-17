@@ -54,10 +54,12 @@ const ProductDetailPage = ({ params }) => {
                             <i className="ri-star-fill"></i>
                         </div>
                         <div className="text-xl md:text-3xl text-red-500 font-medium my-6">
-                            {price}đ
+                            {price.toLocaleString()}đ
                         </div>
                         <p className="font-semibold text-sm">Mô tả:</p>
-                        <p className="my-2 md:max-w-xl">{product?.description}</p>
+                        <p className="my-2 md:max-w-xl">
+                            {product?.description}
+                        </p>
 
                         {product && (
                             <>
