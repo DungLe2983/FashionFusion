@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import FilterSection from '../components/layout/FilterSection';
 import ProductSection from '../components/menu/ProductSection';
-import Pagination from '@mui/material/Pagination';
+import AppPagination from '../components/Pagination';
+
 export default function ProductPage() {
     return (
         <main className='max-w-7xl mx-auto '>
@@ -17,7 +17,7 @@ export default function ProductPage() {
                 <FilterSection />
                 <div className='col-span-6'>
                     <ProductSection />
-                    <Pagination className='mt-8' shape='rounded' count={10} />
+                    <AppPagination />
                 </div>
             </div>
         </main>

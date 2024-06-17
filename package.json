@@ -31,6 +31,7 @@
         "react-hot-toast": "^2.4.1",
         "react-icons": "^5.0.1",
         "react-multi-carousel": "^2.8.5",
+        "react-router-dom": "^6.23.1",
         "remixicon": "^4.2.0",
         "shadcn-ui": "^0.8.0",
         "styled-components": "^6.1.9",
