@@ -70,7 +70,7 @@ const CustomizeProducts = (pros) => {
     };
 
     const handleColorClick = (color, id, size_name) => {
-        console.log("id san pham: ", id, "size", size_name);
+        // console.log("id san pham: ", id, "size", size_name);
 
         setSelectedColor(color);
         const itemStock = items.filter((item) => item._id == id);
@@ -147,6 +147,22 @@ const CustomizeProducts = (pros) => {
             setQuantity((prev) => prev + 1);
         }
     };
+
+    const handleAddClick = () => {
+        const selectedItem = items.find(
+            (item) =>
+                item.size_id.description === selectedSize &&
+                item.color_id.description === selectedColor
+        );
+
+        if (selectedItem) {
+            console.log("Selected Item ID:", selectedItem._id);
+            console.log("Selected Quantity:", quantity);
+        } else {
+            console.log("No item selected");
+        }
+    };
+
     return (
         <>
             {items && (
@@ -216,7 +232,10 @@ const CustomizeProducts = (pros) => {
                             </p>
                         </div>
 
-                        <button className="bg-primary rounded py-4 px-8 text-white mt-6 flex gap-2 text-sm">
+                        <button
+                            className="bg-primary rounded py-4 px-8 text-white mt-6 flex gap-2 text-sm"
+                            onClick={handleAddClick}
+                        >
                             <i className="ri-shopping-cart-2-fill "></i>
                             <span>Add to Cart</span>
                         </button>
