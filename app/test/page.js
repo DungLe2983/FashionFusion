@@ -19,6 +19,38 @@ const Page = () => {
             >
                 Toggle modal
             </button>
+            <div className='flex flex-row items-start gap-8'>
+                <div className='h-[30rem] w-[30rem]'>
+                    <img
+                        className='h-[30rem] w-[30rem] object-cover'
+                        src={
+                            'https://media3.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/May2024/23CMAW.AT003.fixmau4_54.jpg'
+                        }
+                        alt='img'
+                    />
+                </div>
+                <div className='text-left '>
+                    <h2 className='text-xl md:text-2xl font-medium  max-w-[450px] mx-auto lg:mx-0'>
+                        Product Name
+                    </h2>
+                </div>
+            </div>
+            <div className='flex flex-row items-start gap-8'>
+                <div className='md:h-[30rem] md:w-[30rem] '>
+                    <img
+                        className='h-[30rem] w-[30rem] object-cover'
+                        src={
+                            'https://shamdi.vn/wp-content/uploads/2023/05/ao-the-thao-shamdi-1.jpeg'
+                        }
+                        alt='img'
+                    />
+                </div>
+                <div className='text-left '>
+                    <h2 className='text-xl md:text-2xl font-medium  max-w-[450px] mx-auto lg:mx-0'>
+                        Product Name
+                    </h2>
+                </div>
+            </div>
 
             {isModalOpen && (
                 <div className='fixed top-0 right-0 bottom-0 left-0 bg-black opacity-50 z-40'></div>
