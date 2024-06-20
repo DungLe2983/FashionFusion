@@ -19,14 +19,6 @@ export const TableProductInCart = (props) => {
             return newQuantity >= 1 ? newQuantity : 1;
         });
     };
-    const formatCurrency = (amount) => {
-        return new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-        }).format(amount);
-    };
-
-    // console.log("props", props.item._id);
 
     return (
         <tbody>
@@ -73,13 +65,14 @@ export const TableProductInCart = (props) => {
                     </div>
                 </td>
                 <td className="px-6 py-4 font-semibold text-gray-900">
-                    {formatCurrency(props.item.product_item_id.price)}
+                    {props.item.product_item_id.price.toLocaleString()} đ
                 </td>
                 <td className="px-6 py-4 font-semibold text-gray-900">
-                    {formatCurrency(
+                    {(
                         props.item.product_item_id.price *
-                            props.item.item_quantity
-                    )}
+                        props.item.item_quantity
+                    ).toLocaleString()}{" "}
+                    đ
                 </td>
                 <td className="px-6 py-4">
                     <i
