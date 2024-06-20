@@ -1,4 +1,4 @@
-import Product from '../../../models/product';
+import Product from '../../../models/product'
 import dbConnect from '../../../utils/db';
 import { NextResponse } from 'next/server';
 
@@ -6,12 +6,9 @@ export async function GET(req, context) {
     try {
         await dbConnect();
 
-        const id = context.params.id;
+        const products = await Product.find().populate('product_item_id');
 
-        const product = await Product.findById(id).populate('product_item_id');
-
-        // const product = await Product.findById(id);
-        return NextResponse.json(product);
+        return NextResponse.json(products, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
