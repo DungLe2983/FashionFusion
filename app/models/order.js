@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, models } from "mongoose";
+import { type } from "os";
 
 const OrderSchema = new Schema(
     {
@@ -13,6 +14,15 @@ const OrderSchema = new Schema(
                 ref: "OrderDetail",
             },
         ],
+        phone: {
+            type: String,
+        },
+        address: {
+            type: String,
+        },
+        note: {
+            type: String,
+        },
         total: {
             type: Number,
         },
