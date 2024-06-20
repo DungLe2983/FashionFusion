@@ -58,17 +58,26 @@ const Footer = () => {
                         </h2>
                         <ul className='text-gray-500 dark:text-gray-400 font-medium text-sm list-disc pl-4'>
                             <li className='mb-4'>
-                                <a href='#' className='hover:underline'>
+                                <a
+                                    href='/profile/faq'
+                                    className='hover:underline'
+                                >
                                     Giới thiệu
                                 </a>
                             </li>
                             <li className='mb-4'>
-                                <a href='#' className='hover:underline'>
+                                <a
+                                    href='/profile/faq'
+                                    className='hover:underline'
+                                >
                                     Chính sách bảo mật
                                 </a>
                             </li>
                             <li className='mb-4'>
-                                <a href='#' className='hover:underline'>
+                                <a
+                                    href='/profile/faq'
+                                    className='hover:underline'
+                                >
                                     Điều khoản
                                 </a>
                             </li>
