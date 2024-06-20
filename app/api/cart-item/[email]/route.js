@@ -5,6 +5,7 @@ import Cart from "../../../models/cart";
 import Size from "../../../models/size";
 import Color from "../../../models/color";
 import Product from "../../../models/product";
+import ProductItem from "../../../models/product-item";
 import dbConnect from "../../../utils/db";
 
 export async function GET(req, context) {
