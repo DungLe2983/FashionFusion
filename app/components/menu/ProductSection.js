@@ -1,17 +1,10 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';
+"use client";
+import React, { useEffect, useState } from "react";
+import ProductCard from "./ProductCard";
 
 const ProductSection = ({ products }) => {
-    // const headersList = headers();
-    // const fullUrl = headersList.get('referer') || '';
-    // const url = new URL(fullUrl);
-    // const page = url.searchParams.get('page');
-    // console.log('page========', page); // Kết quả: "1"
-
-
     return (
-        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12'>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
             {products?.map((product, index) => {
                 const productItems = product.product_item_id;
                 let minPrice = 1;
@@ -36,12 +29,12 @@ const ProductSection = ({ products }) => {
                         price={
                             <span>
                                 {minPrice === Infinity
-                                    ? '0₫'
+                                    ? "0₫"
                                     : `${minPrice.toLocaleString()} ₫`}
                             </span>
                         }
-                        rate={'1*'}
-                        id={product.id}
+                        rate={"1*"}
+                        id={product._id}
                     />
                 );
             })}
