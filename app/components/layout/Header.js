@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
@@ -7,12 +7,34 @@ import { signOut, useSession } from "next-auth/react";
 const Header = () => {
     const session = useSession();
     const status = session.status;
+    const userEmail = session.data?.session.user.email;
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
+
+    const fetchCartItems = async () => {
+        try {
+            const response = await fetch(`/api/cart-item/${userEmail}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("data", data);
+            setCartItems(data);
+        } catch (error) {
+            console.error("Failed to fetch cart items:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (userEmail) {
+            fetchCartItems();
+        }
+    }, [userEmail]);
 
     return (
         <div>
@@ -33,15 +55,6 @@ const Header = () => {
                     </a>
                     <div className="flex md:order-2 ">
                         {status === "authenticated" && (
-                            // <button
-                            //     data-collapse-toggle="navbar-search"
-                            //     aria-controls="navbar-search"
-                            //     aria-expanded="false"
-                            //     onClick={() => signOut()}
-                            //     className="md:order-3 text-black font-bold ml-0 md:ml-4 px-4 md:px-6 focus:outline-none  bg-primary rounded-3xl text-xs md:text-sm p-2.5 me-1"
-                            // >
-                            //     Logout
-                            // </button>
                             <Link
                                 href={"/profile"}
                                 className="md:order-3 ml-0 md:ml-4 border rounded-full hover:bg-slate-300 px-2 py-1 bg-slate-200"
@@ -83,7 +96,7 @@ const Header = () => {
                                 <i className="ri-shopping-cart-fill text-2xl md:text-3xl mx-2 "></i>
                             </a>
                             <div className="absolute top-[-5px] right-[0] bg-red-600 w-4 h-4 rounded-full text-white font-semibold text-[8px] grid place-items-center">
-                                1
+                                {cartItems.length}
                             </div>
                         </div>
                         <button

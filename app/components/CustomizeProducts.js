@@ -232,6 +232,7 @@ const CustomizeProducts = (pros) => {
                 });
 
                 if (res.ok) {
+                    alert("thanh cong");
                     const respone = await res.json();
                     console.log("respone:", respone);
                 } else {
