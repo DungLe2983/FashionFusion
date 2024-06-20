@@ -1,31 +1,37 @@
 'use client';
 import { Box, Pagination } from '@mui/material';
-import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-export default function AppPagination() {
-    const router = useRouter();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [currentPageNumber, setCurrentPageNumber] = useState(currentPage);
-
-    useEffect(() => {
-        const searchParams = new URLSearchParams();
-        searchParams.set('page', currentPage.toString());
-        const queryString = searchParams.toString()
-            ? `?${searchParams.toString()}`
-            : '';
-        const url = `${window.location.pathname}${queryString}`;
-        router.push(url);
-    }, [currentPage, router]);
-
-    useEffect(() => {
-        setCurrentPageNumber(currentPage);
-    }, [currentPage]);
+export default function AppPagination({ currentPage, onPageChange }) {
+    const [totalCount, setTotalCount] = useState(0);
 
     const handlePageChange = (event, newPage) => {
-        setCurrentPage(newPage);
+        onPageChange(event, newPage);
     };
+    async function getTotalProducts() {
+        try {
+            const res = await fetch(`/api/products/getlength`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
+            if (res.ok) {
+                const data = await res.json();
+                if (data) {
+                    setTotalCount(data.length);
+                } else {
+                    console.error('User not found or response is empty.');
+                }
+            } else {
+                console.error('Error fetching user:', res.statusText);
+            }
+        } catch (error) {
+            console.error('Error in fetch:', error);
+        }
+    }
+    useEffect(() => {
+        getTotalProducts();
+    });
     return (
         <Box
             justifyContent={'center'}
@@ -36,8 +42,8 @@ export default function AppPagination() {
             }}
         >
             <Pagination
-                count={6}
-                page={currentPageNumber}
+                count={Math.ceil(totalCount / 6)} // Tổng số trang
+                page={currentPage}
                 onChange={handlePageChange}
             />
         </Box>
