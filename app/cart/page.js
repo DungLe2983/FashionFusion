@@ -8,89 +8,39 @@ import { redirect } from "next/navigation";
 const CartPage = () => {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [countProduct, setCountProduct] = useState(0);
 
     const session = useSession();
     const { status } = session;
-
-    // Tìm cartId từ email
-    const [cartId, setCartId] = useState("");
     const userEmail = session.data?.session.user.email;
-
-    const getCart = async (email) => {
-        try {
-            const res = await fetch(`/api/users/${email}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-            });
-
-            if (res.ok) {
-                const user = await res.json();
-                const userId = user._id;
-
-                if (userId) {
-                    try {
-                        const response = await fetch("/api/cart", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ user_id: userId }),
-                        });
-
-                        if (response.ok) {
-                            const cart = await response.json();
-                            if (cart) {
-                                setCartId(cart._id);
-                            }
-                        } else {
-                            console.error(
-                                "Error fetching cart:",
-                                response.statusText
-                            );
-                        }
-                    } catch (error) {
-                        console.error("Error:", error);
-                    }
-                } else {
-                    console.error("User not found or response is empty.");
-                }
-            } else {
-                console.error("Error fetching user:", res.statusText);
-            }
-        } catch (error) {
-            console.error("Error in fetch:", error);
-        }
-    };
 
     useEffect(() => {
         if (userEmail) {
-            getCart(userEmail);
-        }
-        if (cartId) {
             const fetchCartItems = async () => {
                 try {
-                    const response = await fetch(`/api/cart-item/${cartId}`);
+                    const response = await fetch(`/api/cart-item/${userEmail}`);
                     if (!response.ok) {
                         throw new Error(
                             `HTTP error status: ${response.status}`
                         );
                     }
                     const data = await response.json();
+                    // console.log("data", data);
+                    setCountProduct(data.length);
                     setCartItems(data);
                 } catch (error) {
                     console.error("Failed to fetch cart items:", error);
                 }
             };
-
             fetchCartItems();
         }
-    }, [userEmail, cartId]);
+    }, [userEmail]);
 
     useEffect(() => {
         if (cartItems.length > 0) {
             let total = 0;
             cartItems.forEach((item) => {
-                total += item.product_item_id.price * item.item_quantity; // Giả sử mỗi item có thuộc tính price và quantity
+                total += item.product_item_id.price * item.item_quantity;
             });
             setTotalPrice(total);
         }
@@ -111,8 +61,9 @@ const CartPage = () => {
                 Giỏ hàng của bạn
             </h2>
             <p className="text-center text-sm mt-2">
-                Có <span className="font-semibold">3 sản phẩm</span> trong giỏ
-                hàng
+                Có{" "}
+                <span className="font-semibold">{countProduct} sản phẩm</span>{" "}
+                trong giỏ hàng
             </p>
             <div className="table-container mt-16">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
