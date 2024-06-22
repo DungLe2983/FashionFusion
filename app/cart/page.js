@@ -1,9 +1,10 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { TableProductInCart } from "../components/layout/TableProductInCart";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { TableProductInCart } from '../components/layout/TableProductInCart';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import Loader from '../components/Loader';
 
 const TEMP = 5;
 
@@ -23,11 +24,11 @@ const CartPage = () => {
                 throw new Error(`HTTP error status: ${response.status}`);
             }
             const data = await response.json();
-            console.log("data", data);
+            console.log('data', data);
             setCountProduct(data.length);
             setCartItems(data);
         } catch (error) {
-            console.error("Failed to fetch cart items:", error);
+            console.error('Failed to fetch cart items:', error);
         }
     };
 
@@ -54,7 +55,7 @@ const CartPage = () => {
 
     const handleQuantityChange = async (id, e) => {
         // let newQuantity = Number(e.target.value);
-        let newQuantity = e.target.value === "" ? 1 : Number(e.target.value);
+        let newQuantity = e.target.value === '' ? 1 : Number(e.target.value);
 
         const currentItem = cartItems.find((item) => item._id === id);
 
@@ -66,9 +67,9 @@ const CartPage = () => {
             }
 
             if (newQuantity > currentQuantity) {
-                console.log("newQuantity", newQuantity);
+                console.log('newQuantity', newQuantity);
                 newQuantity = currentQuantity;
-                console.log("Chỉ còn lại ", currentQuantity, " sản phẩm");
+                console.log('Chỉ còn lại ', currentQuantity, ' sản phẩm');
             }
 
             // Cập nhật cartItems
@@ -80,8 +81,8 @@ const CartPage = () => {
 
             // Gửi yêu cầu PUT tới API
             await fetch(`/api/cart-item`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ newQuantity: newQuantity, id: id }),
             });
         }
@@ -90,15 +91,15 @@ const CartPage = () => {
     async function handleDeleteCartItem(id) {
         try {
             const res = await fetch(`/api/cart-item/`, {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: id }),
             });
 
             if (!res.ok) {
                 const errorData = await res.json();
                 throw new Error(
-                    errorData.error || "Failed to delete cart item"
+                    errorData.error || 'Failed to delete cart item'
                 );
             }
 
@@ -106,47 +107,47 @@ const CartPage = () => {
             setCartItems(cartItems.filter((item) => item._id !== id));
             setCountProduct((prev) => prev - 1);
 
-            alert("Xóa thành công");
+            alert('Xóa thành công');
         } catch (error) {
-            alert("Xóa không thành công");
-            console.log("Error deleting cart item:", error.message);
+            alert('Xóa không thành công');
+            console.log('Error deleting cart item:', error.message);
         }
     }
 
     // Check authenticated
-    if (status === "loading") {
-        return "Loading....";
+    if (status === 'loading') {
+        return <Loader/>;
     }
 
-    if (status === "unauthenticated") {
-        return redirect("/login");
+    if (status === 'unauthenticated') {
+        return redirect('/login');
     }
 
     return (
         <div>
-            <h2 className="text-center font-bold text-3xl mt-8">
+            <h2 className='text-center font-bold text-3xl mt-8'>
                 Giỏ hàng của bạn
             </h2>
-            <p className="text-center text-sm mt-2">
-                Có{" "}
-                <span className="font-semibold">{countProduct} sản phẩm</span>{" "}
+            <p className='text-center text-sm mt-2'>
+                Có{' '}
+                <span className='font-semibold'>{countProduct} sản phẩm</span>{' '}
                 trong giỏ hàng
             </p>
-            <div className="table-container mt-16">
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div className='table-container mt-16'>
+                <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+                    <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+                        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                             <tr>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope='col' className='px-6 py-3'>
                                     Thông tin sản phẩm
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope='col' className='px-6 py-3'>
                                     Số lượng
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope='col' className='px-6 py-3'>
                                     Đơn giá
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope='col' className='px-6 py-3'>
                                     Thành tiền
                                 </th>
                             </tr>
@@ -155,19 +156,19 @@ const CartPage = () => {
                         {cartItems.map((item, index) => (
                             // <TableProductInCart key={index} item={item} />
                             <tbody>
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td className="p-4">
-                                        <div className="flex gap-2">
+                                <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+                                    <td className='p-4'>
+                                        <div className='flex gap-2'>
                                             <img
-                                                className="w-32 h-32"
+                                                className='w-32 h-32 object-cover'
                                                 src={
                                                     item.product_item_id
                                                         .product_id.image[0]
                                                 }
-                                                alt="productInCartImg"
+                                                alt='productInCartImg'
                                             />
-                                            <div className="flex flex-col gap-2 justify-center text-sm">
-                                                <p className=" cursor-pointer hover:text-primary font-semibold">
+                                            <div className='flex flex-col gap-2 justify-center text-sm'>
+                                                <p className=' cursor-pointer hover:text-primary font-semibold'>
                                                     {
                                                         item.product_item_id
                                                             .product_id.name
@@ -177,8 +178,8 @@ const CartPage = () => {
                                                     {
                                                         item.product_item_id
                                                             .color_id.name
-                                                    }{" "}
-                                                    /{" "}
+                                                    }{' '}
+                                                    /{' '}
                                                     {
                                                         item.product_item_id
                                                             .size_id.name
@@ -187,11 +188,11 @@ const CartPage = () => {
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-0">
+                                    <td className='px-6 py-4'>
+                                        <div className='flex items-center gap-0'>
                                             <input
-                                                id="quantity"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm block h-6 w-12  text-center appearance-none"
+                                                id='quantity'
+                                                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm block h-6 w-12  text-center appearance-none'
                                                 required
                                                 value={item.item_quantity}
                                                 onChange={(e) =>
@@ -200,25 +201,25 @@ const CartPage = () => {
                                                         e
                                                     )
                                                 }
-                                                min="1"
-                                                type="number"
+                                                min='1'
+                                                type='number'
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900">
-                                        {item.product_item_id.price.toLocaleString()}{" "}
+                                    <td className='px-6 py-4 font-semibold text-gray-900'>
+                                        {item.product_item_id.price.toLocaleString()}{' '}
                                         đ
                                     </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900">
+                                    <td className='px-6 py-4 font-semibold text-gray-900'>
                                         {(
                                             item.product_item_id.price *
                                             item.item_quantity
-                                        ).toLocaleString()}{" "}
+                                        ).toLocaleString()}{' '}
                                         đ
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className='px-6 py-4'>
                                         <i
-                                            className="ri-delete-bin-fill text-red-500 hover:text-red-400 text-xl cursor-pointer"
+                                            className='ri-delete-bin-fill text-red-500 hover:text-red-400 text-xl cursor-pointer'
                                             onClick={() => {
                                                 handleDeleteCartItem(item._id);
                                             }}
@@ -229,19 +230,19 @@ const CartPage = () => {
                         ))}
                     </table>
                 </div>
-                <div className="mt-6 flex justify-end">
-                    <div className="text-right flex flex-col gap-4 ">
-                        <div className=" flex items-baseline gap-60">
-                            <p className="font-semibold text-gray-900">
+                <div className='mt-6 flex justify-end'>
+                    <div className='text-right flex flex-col gap-4 '>
+                        <div className=' flex items-baseline gap-60'>
+                            <p className='font-semibold text-gray-900'>
                                 Tổng tiền:
                             </p>
-                            <span className="text-red-500 font-semibold text-xl">
+                            <span className='text-red-500 font-semibold text-xl'>
                                 {totalPrice.toLocaleString()}đ
                             </span>
                         </div>
                         <Link
-                            href={"/checkout"}
-                            className=" text-center bg-primary font-bold py-3 w-full text-white "
+                            href={'/checkout'}
+                            className=' text-center bg-primary font-bold py-3 w-full text-white '
                         >
                             Thanh toán
                         </Link>

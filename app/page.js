@@ -6,12 +6,14 @@ import { Contact } from './components/layout/Contact';
 import Hero from './components/layout/Hero';
 import SectionHeader from './components/layout/SectionHeader';
 import ProductCard from './components/menu/ProductCard';
+import Loader from './components/Loader';
 
 export default function Home() {
     const [products, setProducts] = useState();
     const [loading, setLoading] = useState(false);
 
     async function getProducts() {
+        setLoading(true);
         try {
             const res = await fetch('/api/products/getlength', {
                 method: 'GET',
@@ -32,6 +34,7 @@ export default function Home() {
         } catch (error) {
             console.error('Error in fetch:', error);
         }
+        setLoading(false);
     }
     useEffect(() => {
         getProducts();
@@ -42,44 +45,49 @@ export default function Home() {
             <Hero />
             <BranchVoice />
             <SectionHeader url={'/products'} subHeader={'New Arrivals'} />
-            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-[20px] gap-y-10 p-4 '>
-                {products?.slice(0, 8).map((product, index) => {
-                    const productItems = product.product_item_id;
-                    let minPrice = 1;
+            {loading ? (
+                <Loader />
+            ) : (
+                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-[20px] gap-y-10 p-4 '>
+                    {products?.slice(0, 8).map((product, index) => {
+                        const productItems = product.product_item_id;
+                        let minPrice = 1;
 
-                    if (productItems || Array.isArray(productItems)) {
-                        minPrice = Math.min(
-                            ...productItems.map((item) => item.price)
+                        if (productItems || Array.isArray(productItems)) {
+                            minPrice = Math.min(
+                                ...productItems.map((item) => item.price)
+                            );
+                        }
+
+                        return (
+                            <ProductCard
+                                key={index}
+                                image={product.image}
+                                hoverImage={product.image}
+                                name={product.name}
+                                subtitle={
+                                    product.description.length > 20
+                                        ? `${product.description.substring(
+                                              0,
+                                              70
+                                          )}...`
+                                        : product.description
+                                }
+                                price={
+                                    <span>
+                                        {minPrice === Infinity
+                                            ? '0₫'
+                                            : `${minPrice.toLocaleString()} ₫`}
+                                    </span>
+                                }
+                                rate={'1*'}
+                                id={product._id}
+                            />
                         );
-                    }
+                    })}
+                </div>
+            )}
 
-                    return (
-                        <ProductCard
-                            key={index}
-                            image={product.image}
-                            hoverImage={product.image}
-                            name={product.name}
-                            subtitle={
-                                product.description.length > 20
-                                    ? `${product.description.substring(
-                                          0,
-                                          70
-                                      )}...`
-                                    : product.description
-                            }
-                            price={
-                                <span>
-                                    {minPrice === Infinity
-                                        ? '0₫'
-                                        : `${minPrice.toLocaleString()} ₫`}
-                                </span>
-                            }
-                            rate={'1*'}
-                            id={product._id}
-                        />
-                    );
-                })}
-            </div>
             <Contact />
         </div>
     );

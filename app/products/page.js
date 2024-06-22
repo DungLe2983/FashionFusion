@@ -3,16 +3,19 @@ import { useEffect, useState } from 'react';
 import FilterSection from '../components/layout/FilterSection';
 import ProductSection from '../components/menu/ProductSection';
 import AppPagination from '../components/Pagination';
+import Loader from '../components/Loader';
 
 const ProductPage = () => {
     const [products, setProducts] = useState();
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     const handlePageChange = (event, newPage) => {
         setCurrentPage(newPage);
     };
 
     async function getProducts() {
+        setLoading(true);
         try {
             const res = await fetch(`/api/products?page=${currentPage}`, {
                 method: 'GET',
@@ -33,12 +36,15 @@ const ProductPage = () => {
         } catch (error) {
             console.error('Error in fetch:', error);
         }
+        setLoading(false);
     }
     useEffect(() => {
         getProducts();
     }, [currentPage]);
 
-    return (
+    return loading ? (
+        <Loader />
+    ) : (
         <main className='max-w-7xl mx-auto '>
             <img
                 src={'/banner2.png'}
