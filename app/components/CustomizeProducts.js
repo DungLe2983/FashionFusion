@@ -203,6 +203,10 @@ const CustomizeProducts = (pros) => {
 
     // Add to cart click
     const handleAddClick = async () => {
+        if (quantity > stock) {
+            alert("khong thanh cong");
+            return;
+        }
         const selectedItem = items.find(
             (item) =>
                 item.size_id.description === selectedSize &&

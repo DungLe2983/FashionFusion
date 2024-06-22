@@ -30,6 +30,12 @@ const Header = () => {
         }
     };
 
+    function handleSearch(input) {
+        console.log(input);
+        const searchUrl = `/search?query=${encodeURIComponent(input)}`;
+        window.location.href = searchUrl;
+    }
+
     useEffect(() => {
         if (userEmail) {
             fetchCartItems();
@@ -89,6 +95,14 @@ const Header = () => {
                                 id="search-navbar"
                                 className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-gray-500 focus:border-gray-500 "
                                 placeholder="Search..."
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault(); // Để ngăn chặn hành vi mặc định của phím Enter
+                                        const inputValue = e.target.value;
+                                        handleSearch(inputValue); // Gọi function xử lý log
+                                    }
+                                }}
+                                autoComplete={false}
                             />
                         </div>
                         <div className="btnCart relative cursor-pointer hover:text-primary mt-1 md:mt-0 ml-0 md:ml-2">

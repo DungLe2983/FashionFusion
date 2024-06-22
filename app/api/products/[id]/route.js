@@ -1,6 +1,6 @@
-import Product from '../../../models/product';
-import dbConnect from '../../../utils/db';
-import { NextResponse } from 'next/server';
+import Product from "../../../models/product";
+import dbConnect from "../../../utils/db";
+import { NextResponse } from "next/server";
 
 export async function GET(req, context) {
     try {
@@ -8,9 +8,8 @@ export async function GET(req, context) {
 
         const id = context.params.id;
 
-        const product = await Product.findById(id).populate('product_item_id');
+        const product = await Product.findById(id).populate("product_item_id");
 
-        // const product = await Product.findById(id);
         return NextResponse.json(product);
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
