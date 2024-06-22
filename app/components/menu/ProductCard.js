@@ -17,6 +17,7 @@ const ProductCard = ({
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
+
     return (
         <div className=' relative overflow-hidden group transition shadow-lg'>
             <div
@@ -45,7 +46,7 @@ const ProductCard = ({
                     </p>
                     <p className='flex gap-2 items-center mr-2 text-sm'>
                         <i className='ri-star-fill text-yellow-400'></i>
-                        <span className='font-semibold'>{rate}</span>
+                        <span className='font-semibold'>5</span>
                     </p>
                 </div>
             </div>
