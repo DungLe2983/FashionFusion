@@ -1,112 +1,172 @@
-'use client';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+"use client";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
-const colors = ['Đen', 'Trắng', 'Vàng', 'Nâu', 'Đỏ', 'Hồng'];
-const categories = ['Nam', 'Nữ'];
-const sizes = ['S', 'M', 'L', 'XL'];
-const sortingOrder = [
-    'Áo thun',
-    'Áo Polo',
-    'Baby Tee',
-    'Áo sơ mi',
-    'Hoodie',
-    'Quần',
-    'Phụ kiện',
-];
+// const colors = ["Đen", "Trắng", "Vàng", "Nâu", "Đỏ", "Hồng"];
+// const sizes = ["S", "M", "L", "XL"];
+// const sortingOrder = [
+//     "Áo thun",
+//     "Áo Polo",
+//     "Baby Tee",
+//     "Áo sơ mi",
+//     "Hoodie",
+//     "Quần",
+//     "Phụ kiện",
+// ];
 
-const filterOptions = [
-    {
-        id: 'sort',
-        title: 'Bộ lọc tìm kiếm',
-        options: sortingOrder,
-        type: 'checkbox',
-    },
-    {
-        id: 'categories',
-        title: 'Giới tính',
-        options: categories,
-        type: 'checkbox',
-    },
-    {
-        id: 'colors',
-        title: 'Màu sắc',
-        options: colors,
-        type: 'checkbox',
-    },
-    {
-        id: 'sizes',
-        title: 'Sizes',
-        options: sizes,
-        type: 'checkbox',
-    },
-];
+// const filterOptions = [
+//     {
+//         id: "sort",
+//         title: "Bộ lọc tìm kiếm",
+//         options: sortingOrder,
+//         type: "checkbox",
+//     },
+//     {
+//         id: "colors",
+//         title: "Màu sắc",
+//         options: colors,
+//         type: "checkbox",
+//     },
+//     {
+//         id: "sizes",
+//         title: "Sizes",
+//         options: sizes,
+//         type: "checkbox",
+//     },
+// ];
 
 const FilterSection = () => {
     const [selectedFilters, setSelectedFilters] = useState([]);
+    const [filterOptions, setFilterOptions] = useState();
 
-    const handleFilterChange = (filterId, option) => {
-        setSelectedFilters((prevFilters) => {
-            // Check if the filter is already selected
-            const filterIndex = prevFilters.findIndex(
-                (filter) => filter.id === filterId
+    async function handleFilter(filter) {
+        try {
+            const res = await fetch("/api/products/filter", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(filter),
+            });
+
+            const data = await res.json();
+            console.log("fetch data:", data);
+        } catch (error) {
+            console.error("error", error.message);
+        }
+    }
+
+    async function getFilterOptions() {
+        try {
+            const res = await fetch(`/api/filter`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!res.ok) {
+                console.log("loi fetch");
+                return;
+            }
+            const data = await res.json();
+            console.log("filter options", data);
+            setFilterOptions(data);
+        } catch (error) {
+            console.error("error:", error.message);
+        }
+    }
+
+    const handleOptionChange = (filterName, optionName, isChecked, type) => {
+        setSelectedFilters((prevSelectedFilters) => {
+            // Kiểm tra xem filterName đã tồn tại trong mảng chưa
+            const existingFilterIndex = prevSelectedFilters.findIndex(
+                (filter) => filter.name === filterName
             );
 
-            if (filterIndex !== -1) {
-                // Filter is already selected, update the options
-                const updatedFilters = [...prevFilters];
-                updatedFilters[filterIndex].options = option.checked
-                    ? [...updatedFilters[filterIndex].options, option.value]
-                    : updatedFilters[filterIndex].options.filter(
-                          (value) => value !== option.value
-                      );
-                return updatedFilters;
-            }
+            if (existingFilterIndex !== -1) {
+                // Nếu filterName đã tồn tại, cập nhật options
+                let updatedOptions = [
+                    ...prevSelectedFilters[existingFilterIndex].options,
+                ];
 
-            // Filter is not selected, add a new filter
-            return [
-                ...prevFilters,
-                {
-                    id: filterId,
-                    title: '',
-                    options: [option.value],
-                    type: '',
-                },
-            ];
+                if (isChecked) {
+                    // Nếu người dùng chọn, thêm optionName vào mảng
+                    if (type === "checkbox") {
+                        updatedOptions.push(optionName);
+                    } else if (type === "radio") {
+                        // Với radio button, chỉ cập nhật option đầu tiên
+                        updatedOptions = [optionName];
+                    }
+                } else {
+                    // Nếu người dùng bỏ chọn, xóa optionName khỏi mảng
+                    updatedOptions = updatedOptions.filter(
+                        (name) => name !== optionName
+                    );
+                }
+
+                // Trả về mảng đã cập nhật
+                return prevSelectedFilters.map((filter) =>
+                    filter.name === filterName
+                        ? { ...filter, options: updatedOptions }
+                        : filter
+                );
+            } else {
+                // Nếu filterName chưa tồn tại, thêm filter mới vào mảng
+                return [
+                    ...prevSelectedFilters,
+                    {
+                        name: filterName,
+                        options: isChecked ? [optionName] : [],
+                    },
+                ];
+            }
         });
     };
 
+    useEffect(() => {
+        console.log("Updated filters:", selectedFilters);
+        handleFilter(selectedFilters);
+    }, [selectedFilters]);
+
+    useEffect(() => {
+        getFilterOptions();
+    }, []);
+
     return (
-        <div className='col-span-2 space-y-6 h-fit top-12 sticky'>
-            {/* Render filter options */}
-            {filterOptions.map((filter) => (
-                <div className='border-b pb-4' key={filter.id}>
-                    <h3 className='font-bold mb-2 text-sm md:text-base '>
-                        {filter.title}
+        <div className="col-span-2 space-y-6 h-fit top-12 sticky">
+            {filterOptions?.map((filter) => (
+                <div className="border-b pb-4" key={filter.name}>
+                    <h3 className="font-bold mb-2 text-sm md:text-base ">
+                        {filter.name}
                     </h3>
-                    {filter.options.map((option) => (
+                    {filter.options?.map((option) => (
                         <label
                             key={option}
-                            className='flex items-center space-x-2 text-sm md:text-base text-gray-600 cursor-pointer'
+                            className="flex items-center space-x-2 text-sm md:text-base text-gray-600 cursor-pointer"
                         >
-                            <div className='flex gap-2 items-center mt-2'>
+                            <div className="flex gap-2 items-center mt-2">
                                 <input
                                     type={filter.type}
-                                    value={option}
-                                    checked={selectedFilters.some(
-                                        (selectedFilter) =>
-                                            selectedFilter.id === filter.id &&
-                                            selectedFilter.options.includes(
-                                                option
-                                            )
-                                    )}
+                                    value={option.name}
+                                    name={filter.name}
+                                    // checked={selectedFilters.some(
+                                    //     (selectedFilter) =>
+                                    //         selectedFilter.id === filter.id &&
+                                    //         selectedFilter.options.includes(
+                                    //             option
+                                    //         )
+                                    // )}
+                                    // onChange={(e) =>
+                                    //     handleFilterChange(filter.id, e.target)
+                                    // }
                                     onChange={(e) =>
-                                        handleFilterChange(filter.id, e.target)
+                                        handleOptionChange(
+                                            filter.name,
+                                            option._id,
+                                            e.target.checked,
+                                            filter.type
+                                        )
                                     }
-                                    className='form-checkbox focus:ring-white h-4 w-4 text-gray-600 border-gray-300 rounded'
+                                    className="form-checkbox focus:ring-white h-4 w-4 text-gray-600 border-gray-300 rounded"
                                 />
-                                <span>{option}</span>
+                                <span>{option.name}</span>
                             </div>
                         </label>
                     ))}

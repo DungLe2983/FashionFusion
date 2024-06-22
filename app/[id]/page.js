@@ -11,6 +11,7 @@ const ProductDetailPage = ({ params }) => {
     const { id } = params;
 
     const [product, setProduct] = useState(null);
+    const [relatedProduct, setRelatedProduct] = useState(null);
     const [price, setPrice] = useState(0);
 
     const getProduct = async () => {
@@ -29,13 +30,29 @@ const ProductDetailPage = ({ params }) => {
         }
     };
 
-    useEffect(() => {
-        getProduct();
-    }, []);
-
     const handlePriceUpdate = (newPrice) => {
         setPrice(newPrice);
     };
+
+    async function getRelatedProduct() {
+        try {
+            const res = await fetch(`http://localhost:5555/api?id=${id}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!res.ok) throw new Error(res.statusText);
+            const relatedProductData = await res.json();
+            setRelatedProduct(relatedProductData);
+            console.log("Get Related Product successful", relatedProductData);
+        } catch (error) {
+            console.error("Error in fetch:", error);
+        }
+    }
+
+    useEffect(() => {
+        getProduct();
+        getRelatedProduct();
+    }, []);
 
     return (
         <section className="pt-12 pb-12 lg:py-8 h-full flex flex-col items-center">
@@ -90,7 +107,7 @@ const ProductDetailPage = ({ params }) => {
                     </div>
                 </div>
             </div>
-            <RelatedProduct />
+            <RelatedProduct data={relatedProduct} />
         </section>
     );
 };
