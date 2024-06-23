@@ -162,7 +162,7 @@ const HistoryOrderPage = () => {
                             Đơn hàng của bạn
                         </p>
                     </div>
-                    {!historyBuy ? (
+                    {historyBuy.length === 0 ? (
                         <p className='text-gray-600 text-center mt-8 text-sm font-bold'>
                             Bạn chưa có đơn hàng nào...
                         </p>
