@@ -1,13 +1,21 @@
 import { NextResponse } from "next/server";
 import Product from "../../../models/product";
+import ProductItem from "../../../models/product-item";
+import Color from "../../../models/color";
+import Size from "../../../models/size";
+import dbConnect from "../../../utils/db";
 
 export async function PUT(req, res) {
     try {
         const filters = await req.json();
 
-        const allProducts = await Product.find()
-            .populate("product_item_id")
-            .exec();
+        await dbConnect();
+
+        const url = new URL(req.url);
+        const page = url.searchParams.get("page");
+        const skipPage = (page - 1) * 6;
+
+        const allProducts = await Product.find().populate("product_item_id");
 
         let filteredProducts = allProducts;
 
@@ -19,25 +27,39 @@ export async function PUT(req, res) {
                     );
                     break;
                 case "Color":
-                    filteredProducts = filteredProducts.filter((product) =>
-                        product.product_item_id.some((item) =>
-                            filter.options.includes(item.color_id)
-                        )
-                    );
-                    break;
+                    if (filter.options.length === 0) {
+                        break;
+                    } else {
+                        filteredProducts = filteredProducts.filter((product) =>
+                            product.product_item_id.some((item) =>
+                                filter.options.includes(
+                                    item.color_id.toString()
+                                )
+                            )
+                        );
+                        break;
+                    }
                 case "Size":
-                    filteredProducts = filteredProducts.filter((product) =>
-                        product.product_item_id.some((item) =>
-                            filter.options.includes(item.size_id)
-                        )
-                    );
-                    break;
+                    if (filter.options.length === 0) {
+                        break;
+                    } else {
+                        filteredProducts = filteredProducts.filter((product) =>
+                            product.product_item_id.some((item) =>
+                                filter.options.includes(item.size_id.toString())
+                            )
+                        );
+                        break;
+                    }
                 default:
                     break;
             }
         }
 
-        return NextResponse.json(filteredProducts, { status: 200 });
+        const startIndex = skipPage;
+        const endIndex = Math.min(startIndex + 6, filteredProducts.length);
+        const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+        return NextResponse.json(paginatedProducts, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
