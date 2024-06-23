@@ -1,7 +1,15 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
+const ProductCard = ({
+    image,
+    hoverImage,
+    name,
+    subtitle,
+    price,
+    rate,
+    id,
+}) => {
     const [isHovered, setIsHovered] = useState(false);
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -9,6 +17,7 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
+
     return (
         <div className=' relative overflow-hidden group transition shadow-lg'>
             <div
@@ -24,7 +33,7 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
                 />
                 <div className='px-6 py-4'>
                     <Link
-                        href={'/products/id'}
+                        href={`/${id}`}
                         className='font-bold text-base mb-2 cursor-pointer hover:text-primary '
                     >
                         {name}
@@ -37,7 +46,7 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
                     </p>
                     <p className='flex gap-2 items-center mr-2 text-sm'>
                         <i className='ri-star-fill text-yellow-400'></i>
-                        <span className='font-semibold'>{rate}</span>
+                        <span className='font-semibold'>5</span>
                     </p>
                 </div>
             </div>
@@ -48,7 +57,7 @@ const ProductCard = ({ image, hoverImage, name, subtitle, price, rate }) => {
                     </div>
                 </button>
                 <Link
-                    href={'/productDetail'}
+                    href={`/${id}`}
                     className='bg-white h-8 w-8 md:h-12 md:w-12 flex justify-center items-center text-black drop-shadow-xl'
                 >
                     <i className='ri-eye-fill text-sm md:text-xl'></i>

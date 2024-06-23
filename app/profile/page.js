@@ -10,7 +10,7 @@ const ProfilePage = () => {
     const session = useSession();
     console.log(session);
     const { status } = session;
-    const userEmail = session.data?.user.email;
+    const userEmail = session.data?.session.user.email;
 
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
