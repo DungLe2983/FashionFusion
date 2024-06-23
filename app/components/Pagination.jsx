@@ -1,18 +1,19 @@
-'use client';
-import { Box, Pagination } from '@mui/material';
-import { useState, useEffect } from 'react';
+"use client";
+import { Box, Pagination } from "@mui/material";
+import { useState, useEffect } from "react";
 
-export default function AppPagination({ currentPage, onPageChange }) {
+export default function AppPagination({ currentPage, onPageChange, count }) {
     const [totalCount, setTotalCount] = useState(0);
 
     const handlePageChange = (event, newPage) => {
         onPageChange(event, newPage);
     };
+
     async function getTotalProducts() {
         try {
             const res = await fetch(`/api/products/getlength`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
             });
 
             if (res.ok) {
@@ -20,25 +21,27 @@ export default function AppPagination({ currentPage, onPageChange }) {
                 if (data) {
                     setTotalCount(data.length);
                 } else {
-                    console.error('User not found or response is empty.');
+                    console.error("User not found or response is empty.");
                 }
             } else {
-                console.error('Error fetching user:', res.statusText);
+                console.error("Error fetching user:", res.statusText);
             }
         } catch (error) {
-            console.error('Error in fetch:', error);
+            console.error("Error in fetch:", error);
         }
     }
+
     useEffect(() => {
         getTotalProducts();
+        // setTotalCount(count);
     });
     return (
         <Box
-            justifyContent={'center'}
-            alignItems={'center'}
-            display={'flex'}
+            justifyContent={"center"}
+            alignItems={"center"}
+            display={"flex"}
             sx={{
-                marginTop: '30px',
+                marginTop: "30px",
             }}
         >
             <Pagination
