@@ -36,24 +36,9 @@ import React, { useEffect, useState } from "react";
 //     },
 // ];
 
-const FilterSection = () => {
+export default function FilterSection({ filterChange }) {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [filterOptions, setFilterOptions] = useState();
-
-    async function handleFilter(filter) {
-        try {
-            const res = await fetch("/api/products/filter", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(filter),
-            });
-
-            const data = await res.json();
-            console.log("fetch data:", data);
-        } catch (error) {
-            console.error("error", error.message);
-        }
-    }
 
     async function getFilterOptions() {
         try {
@@ -74,56 +59,54 @@ const FilterSection = () => {
     }
 
     const handleOptionChange = (filterName, optionName, isChecked, type) => {
-        setSelectedFilters((prevSelectedFilters) => {
-            // Kiểm tra xem filterName đã tồn tại trong mảng chưa
-            const existingFilterIndex = prevSelectedFilters.findIndex(
-                (filter) => filter.name === filterName
-            );
-
-            if (existingFilterIndex !== -1) {
-                // Nếu filterName đã tồn tại, cập nhật options
-                let updatedOptions = [
-                    ...prevSelectedFilters[existingFilterIndex].options,
-                ];
-
-                if (isChecked) {
-                    // Nếu người dùng chọn, thêm optionName vào mảng
-                    if (type === "checkbox") {
-                        updatedOptions.push(optionName);
-                    } else if (type === "radio") {
-                        // Với radio button, chỉ cập nhật option đầu tiên
-                        updatedOptions = [optionName];
-                    }
-                } else {
-                    // Nếu người dùng bỏ chọn, xóa optionName khỏi mảng
-                    updatedOptions = updatedOptions.filter(
-                        (name) => name !== optionName
-                    );
-                }
-
-                // Trả về mảng đã cập nhật
-                return prevSelectedFilters.map((filter) =>
-                    filter.name === filterName
-                        ? { ...filter, options: updatedOptions }
-                        : filter
-                );
-            } else {
-                // Nếu filterName chưa tồn tại, thêm filter mới vào mảng
-                return [
-                    ...prevSelectedFilters,
-                    {
-                        name: filterName,
-                        options: isChecked ? [optionName] : [],
-                    },
-                ];
-            }
-        });
+        // setSelectedFilters((prevSelectedFilters) => {
+        //     // Kiểm tra xem filterName đã tồn tại trong mảng chưa
+        //     const existingFilterIndex = prevSelectedFilters.findIndex(
+        //         (filter) => filter.name === filterName
+        //     );
+        //     if (existingFilterIndex !== -1) {
+        //         // Nếu filterName đã tồn tại, cập nhật options
+        //         let updatedOptions = [
+        //             ...prevSelectedFilters[existingFilterIndex].options,
+        //         ];
+        //         if (isChecked) {
+        //             // Nếu người dùng chọn, thêm optionName vào mảng
+        //             if (type === "checkbox") {
+        //                 updatedOptions.push(optionName);
+        //             } else if (type === "radio") {
+        //                 // Với radio button, chỉ cập nhật option đầu tiên
+        //                 updatedOptions = [optionName];
+        //             }
+        //         } else {
+        //             // Nếu người dùng bỏ chọn, xóa optionName khỏi mảng
+        //             updatedOptions = updatedOptions.filter(
+        //                 (name) => name !== optionName
+        //             );
+        //         }
+        //         // Trả về mảng đã cập nhật
+        //         return prevSelectedFilters.map((filter) =>
+        //             filter.name === filterName
+        //                 ? { ...filter, options: updatedOptions }
+        //                 : filter
+        //         );
+        //     } else {
+        //         // Nếu filterName chưa tồn tại, thêm filter mới vào mảng
+        //         return [
+        //             ...prevSelectedFilters,
+        //             {
+        //                 name: filterName,
+        //                 options: isChecked ? [optionName] : [],
+        //             },
+        //         ];
+        //     }
+        // });
+        filterChange(filterName, optionName, isChecked, type);
     };
 
-    useEffect(() => {
-        console.log("Updated filters:", selectedFilters);
-        handleFilter(selectedFilters);
-    }, [selectedFilters]);
+    // useEffect(() => {
+    //     console.log("Updated filters:", selectedFilters);
+    //     handleFilter(selectedFilters);
+    // }, [selectedFilters]);
 
     useEffect(() => {
         getFilterOptions();
@@ -174,6 +157,4 @@ const FilterSection = () => {
             ))}
         </div>
     );
-};
-
-export default FilterSection;
+}
