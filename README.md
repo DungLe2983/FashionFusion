@@ -48,7 +48,7 @@ You can simply click this [link](https://rhythm-party.vercel.app/) to get starte
 ![ProdutcDetail](./demo_ui/DetailProduct.png)
 ![Cart](./demo_ui/Cart.png)
 ![Checkout](./demo_ui/checkout.png)
-![Search](./demo_ui/Search.png)
+![Search](./demo_ui/SearchPage.png)
 ![Profile](./demo_ui/Profile.png)
 ![PurchaseHistory](./demo_ui/PurchaseHistory.png)
 
