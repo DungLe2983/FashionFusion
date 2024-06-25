@@ -43,7 +43,14 @@ You can simply click this [link](https://rhythm-party.vercel.app/) to get starte
 
 ## User Interface
 
-
+![Home](./demo_ui/Home.png)
+![Product](./demo_ui/Product.png)
+![ProdutcDetail](./demo_ui/DetailProduct.png)
+![Cart](./demo_ui/Cart.png)
+![Checkout](./demo_ui/checkout.png)
+![Search](./demo_ui/Search.png)
+![Profile](./demo_ui/Profile.png)
+![PurchaseHistory](./demo_ui/PurchaseHistory.png)
 
 ## Authors
 
