@@ -130,7 +130,7 @@ const ProductPage = () => {
             <img
                 src={"/banner2.png"}
                 alt="banner"
-                className="w-full h-[300px] object-fill md:object-cover rounded"
+                className="w-full h-[300px] object-cover md:object-cover rounded"
             />
             <p className="font-semibold text-xl md:text-3xl text-primary mt-8">
                 Tất cả sản phẩm:
