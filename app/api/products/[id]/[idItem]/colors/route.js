@@ -11,8 +11,6 @@ export async function GET(req, context) {
 
         const product = await ProductItem.findById(id).populate("color_id");
 
-        console.log(product.color_id);
-
         return NextResponse.json(product.color_id);
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });

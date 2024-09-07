@@ -45,47 +45,47 @@ export default function RegisterPage() {
     }
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <p className="flex items-center mb-6 text-4xl font-semibold text-primary">
+        <section className='bg-gray-50 dark:bg-gray-900'>
+            <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0'>
+                <p className='flex items-center mb-6 text-xl md:text-4xl font-semibold text-primary'>
                     Register
                 </p>
                 <h1>
                     {userCreated && (
-                        <div className="text-sm font-light text-gray-700 dark:text-gray-400 pb-5">
-                            User created. Now you can{" "}
+                        <div className='text-sm font-light text-gray-700 dark:text-gray-400 pb-5'>
+                            User created. Now you can{' '}
                             <Link
-                                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                href={"/login"}
+                                className='font-medium text-primary-600 hover:underline dark:text-primary-500'
+                                href={'/login'}
                             >
                                 Login
                             </Link>
                         </div>
                     )}
                 </h1>
-                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                <div className='w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
+                    <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
+                        <h1 className='text-base font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
                             Create an account
                         </h1>
                         <form
-                            className="space-y-4 md:space-y-6"
+                            className='space-y-4 md:space-y-6'
                             onSubmit={handleFormSubmit}
                         >
                             <div>
                                 <label
-                                    for="email"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    for='email'
+                                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                                 >
                                     Your email
                                 </label>
                                 <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 "
-                                    placeholder="Enter your email"
-                                    required=""
+                                    type='email'
+                                    name='email'
+                                    id='email'
+                                    className='bg-gray-50 border border-gray-300 text-gray-900 text-sm md:text-base rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 '
+                                    placeholder='Enter your email'
+                                    required=''
                                     value={email}
                                     onChange={(ev) => setEmail(ev.target.value)}
                                     disabled={userCreated}
@@ -93,25 +93,25 @@ export default function RegisterPage() {
                             </div>
                             <div>
                                 <label
-                                    for="password"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    for='password'
+                                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                                 >
                                     Password
                                 </label>
                                 <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Enter your password"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 "
-                                    required=""
+                                    type='password'
+                                    name='password'
+                                    id='password'
+                                    placeholder='Enter your password'
+                                    className='bg-gray-50 border border-gray-300 text-gray-900 text-sm md:text-base rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 '
+                                    required=''
                                     value={password}
                                     onChange={onChangePassword}
                                     disabled={userCreated}
                                 />
                                 <h2>
                                     {invalidPassword && (
-                                        <div className=" font-medium mt-2 text-sm text-red-500">
+                                        <div className=' font-medium mt-2 text-sm text-red-500'>
                                             Password must have more 5 character
                                         </div>
                                     )}
@@ -119,33 +119,33 @@ export default function RegisterPage() {
                             </div>
 
                             <button
-                                type="submit"
-                                className="w-full text-white bg-primary focus:ring-4 focus:outline-none focus:ring-gray-300 
-                                font-medium rounded-lg text-sm px-5 py-3 text-center "
+                                type='submit'
+                                className='w-full text-white bg-primary focus:ring-4 focus:outline-none focus:ring-gray-300
+                                font-medium rounded-lg text-sm px-5 py-3 text-center '
                                 disabled={userCreated}
                             >
                                 Register
                             </button>
-                            <p className="text-center text-gray-500 text-sm">
+                            <p className='text-center text-gray-500 text-sm'>
                                 or login with provider
                             </p>
                             <button
                                 onClick={loginWithGoogle}
-                                className="w-full flex items-center justify-center bg-gray-300  gap-2 font-medium rounded-lg text-sm px-5 py-2 text-center "
+                                className='w-full flex items-center justify-center bg-gray-300  gap-2 font-medium rounded-lg text-sm px-5 py-2 text-center '
                             >
                                 <Image
-                                    src={"/google.png"}
-                                    alt={"googleIcon"}
+                                    src={'/google.png'}
+                                    alt={'googleIcon'}
                                     width={30}
                                     height={30}
                                 />
                                 Login with Google
                             </button>
-                            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Already have an account? {""}
+                            <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
+                                Already have an account? {''}
                                 <Link
-                                    href="/login"
-                                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                                    href='/login'
+                                    className='font-medium text-primary-600 hover:underline dark:text-primary-500'
                                 >
                                     Login here
                                 </Link>

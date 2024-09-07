@@ -67,21 +67,21 @@ const ProductDetailPage = ({ params }) => {
                 <div className='flex flex-col gap-8 md:flex-row '>
                     <ProductImages image={product?.image} />
                     <div className='text-left '>
-                        <h2 className='text-xl md:text-2xl font-medium '>
+                        <h2 className='text-base md:text-2xl font-medium '>
                             {product?.name}
                         </h2>
-                        <div className='my-2 text-xl text-yellow-400 flex  items-center gap-1'>
+                        <div className='my-2 text-base md:text-xl text-yellow-400 flex  items-center gap-1'>
                             <i className='ri-star-fill'></i>
                             <i className='ri-star-fill'></i>
                             <i className='ri-star-fill'></i>
                             <i className='ri-star-fill'></i>
                             <i className='ri-star-fill'></i>
                         </div>
-                        <div className='text-xl md:text-3xl text-red-500 font-medium my-6'>
+                        <div className='text-xl md:text-3xl text-red-500 font-medium my-2 md:my-6'>
                             {price.toLocaleString()}đ
                         </div>
                         <p className='font-semibold text-sm'>Mô tả:</p>
-                        <p className='my-2 md:max-w-xl'>
+                        <p className='my-2 md:max-w-xl text-xs md:text-base'>
                             {product?.description}
                         </p>
 

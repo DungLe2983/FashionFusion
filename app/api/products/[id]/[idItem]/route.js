@@ -14,8 +14,6 @@ export async function GET(req, context) {
             .populate("color_id")
             .populate("size_id");
 
-        console.log("product item: ====", product);
-
         return NextResponse.json(product);
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });

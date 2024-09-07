@@ -63,31 +63,6 @@ const ProductPage = () => {
         });
     };
 
-    // async function getProducts() {
-    //     setLoading(true);
-    //     try {
-    //         const res = await fetch(`/api/products?page=${currentPage}`, {
-    //             method: "GET",
-    //             headers: { "Content-Type": "application/json" },
-    //         });
-
-    //         if (res.ok) {
-    //             const data = await res.json();
-    //             // console.log('data', data);
-    //             if (data) {
-    //                 setProducts(data);
-    //             } else {
-    //                 console.error("User not found or response is empty.");
-    //             }
-    //         } else {
-    //             console.error("Error fetching user:", res.statusText);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error in fetch:", error);
-    //     }
-    //     setLoading(false);
-    // }
-
     async function handleFilter(filter) {
         try {
             const res = await fetch(
@@ -102,7 +77,7 @@ const ProductPage = () => {
             const data = await res.json();
 
             if (data) {
-                console.log("fetch data:", data);
+                // console.log("fetch data:", data);
                 setProducts(data);
             } else {
                 console.error("User not found or response is empty.");
@@ -113,13 +88,13 @@ const ProductPage = () => {
     }
 
     useEffect(() => {
-        console.log("Updated filters:", selectedFilters);
+        // console.log("Updated filters:", selectedFilters);
         setCurrentPage(1);
         handleFilter(selectedFilters);
     }, [selectedFilters]);
 
     useEffect(() => {
-        console.log("Current page:", currentPage);
+        // console.log("Current page:", currentPage);
         handleFilter(selectedFilters);
     }, [currentPage]);
 

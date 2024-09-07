@@ -3,8 +3,8 @@ import React from 'react';
 const BranchVoice = () => {
     return (
         <div className='max-w-3xl text-center mx-auto'>
-            <h3 className='font-semibold text-3xl mt-4 '>Enjoy Your Youth!</h3>
-            <p className='text-sm md:text-base my-8 '>
+            <h3 className='font-semibold text-xl md:text-3xl mt-4 '>Enjoy Your Youth!</h3>
+            <p className='text-sm text-gray-500 md:text-base my-8 '>
                 Hãy cùng trải nghiệm sức mạnh tuổi trẻ tại{' '}
                 <span className='text-primary font-bold italic'>
                     FashionFusion

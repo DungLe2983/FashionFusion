@@ -48,7 +48,7 @@ export default function Home() {
             {loading ? (
                 <Loader />
             ) : (
-                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-[20px] gap-y-10 p-4 '>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-[20px] gap-y-10 p-4 '>
                     {products?.slice(0, 8).map((product, index) => {
                         const productItems = product.product_item_id;
                         let minPrice = 1;
