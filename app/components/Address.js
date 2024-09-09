@@ -53,11 +53,13 @@ const Address = ({ address, onChange, email, onDeleteSuccess }) => {
     return (
         <>
             <div className='flex justify-between mt-4'>
-                <p className=' font-medium text-gray-600 text-md'>{address}</p>
+                <p className=' font-medium text-gray-600 text-xs md:text-base'>
+                    {address}
+                </p>
 
-                <div className='flex gap-2 text-sm text-primary '>
+                <div className='flex gap-2  text-primary text-xs md:text-sm '>
                     <button
-                        className=' border-r-2 pr-2 hover:text-hoverColor'
+                        className=' border-r-2 pr-2 hover:text-hoverColor '
                         onClick={onChange}
                     >
                         Cập nhật

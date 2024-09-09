@@ -50,7 +50,7 @@ const ProductCard = ({
                     </p>
                 </div>
             </div>
-            <div className='absolute top-6 -right-11 group-hover:right-0 md:group-hover:right-3 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300'>
+            <div className='absolute top-6  md:-right-11 group-hover:right-8 md:group-hover:right-3 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300'>
                 <button>
                     <div className='h-8 w-8 md:h-12 md:w-12 flex justify-center items-center text-white bg-primary'>
                         <i className='ri-shopping-cart-2-line text-sm md:text-xl '></i>

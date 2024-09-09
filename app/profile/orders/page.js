@@ -16,7 +16,7 @@ const HistoryOrderPage = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                console.log('Response history:', data);
+                // console.log('Response history:', data);
                 if (data) {
                     setHistoryBuy(data);
                 } else {
@@ -52,7 +52,7 @@ const HistoryOrderPage = () => {
                         for='select-1'
                         className='flex w-full cursor-pointer select-none rounded-lg border p-2 px-3 text-sm text-gray-700 ring-gray-300 peer-checked:ring'
                     >
-                        Thông tin tài khoản{' '}
+                        Lịch sử đơn hàng{' '}
                     </label>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -70,16 +70,22 @@ const HistoryOrderPage = () => {
                     </svg>
                     <ul className='max-h-0 select-none flex-col overflow-hidden rounded-b-lg shadow-md transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3'>
                         <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
-                            Lịch sử đơn hàng
+                            <Link href={'/profile'}>Thông tin tài khoản</Link>
                         </li>
                         <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
-                            Sổ địa chỉ
+                            <Link href={'/profile/user-address'}>
+                                Sổ địa chỉ
+                            </Link>
                         </li>
                         <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
-                            Đánh giá và phản hồi
+                            <Link href={'/profile/reviews'}>
+                                Đánh giá và phản hồi
+                            </Link>
                         </li>
                         <li className='cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-primary hover:text-white'>
-                            Chính sách và câu hỏi thường gặp
+                            <Link href={'/profile/faq'}>
+                                Chính sách và câu hỏi thường gặp
+                            </Link>
                         </li>
                         <li
                             onClick={() => signOut({ callbackUrl: '/' })}
@@ -171,10 +177,13 @@ const HistoryOrderPage = () => {
                             <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
                                 <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                                     <tr>
-                                        <th scope='col' className='px-6 py-3'>
+                                        <th scope='col' className=' py-3'>
                                             Thông tin sản phẩm
                                         </th>
-                                        <th scope='col' className='px-6 py-3'>
+                                        <th
+                                            scope='col'
+                                            className='pl-20 md:px-6 py-3 '
+                                        >
                                             Số lượng
                                         </th>
                                         <th scope='col' className='px-6 py-3'>
@@ -229,7 +238,7 @@ const HistoryOrderPage = () => {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className='px-6 py-4'>
+                                            <td className='pl-20 md:px-6 py-4 text-center'>
                                                 <p className=''>
                                                     {item.quantity}
                                                 </p>

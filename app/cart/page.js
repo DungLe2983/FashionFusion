@@ -141,7 +141,7 @@ const CartPage = () => {
                                 <th scope='col' className='px-6 py-3'>
                                     Thông tin sản phẩm
                                 </th>
-                                <th scope='col' className='px-6 py-3'>
+                                <th scope='col' className='pl-16 md:px-6 py-3'>
                                     Số lượng
                                 </th>
                                 <th scope='col' className='px-6 py-3'>
@@ -188,7 +188,7 @@ const CartPage = () => {
                                             </div>
                                         </div>
                                     </td>
-                                    <td className='px-6 py-4'>
+                                    <td className='pl-16 md:px-6 py-4'>
                                         <div className='flex items-center gap-0'>
                                             <input
                                                 id='quantity'
@@ -230,9 +230,9 @@ const CartPage = () => {
                         ))}
                     </table>
                 </div>
-                <div className='mt-6 flex justify-end'>
+                <div className='mt-6 flex md:justify-end'>
                     <div className='text-right flex flex-col gap-4 '>
-                        <div className=' flex items-baseline gap-60'>
+                        <div className=' flex flex-col md:flex-row items-baseline md:gap-60'>
                             <p className='font-semibold text-gray-900'>
                                 Tổng tiền:
                             </p>
@@ -242,7 +242,7 @@ const CartPage = () => {
                         </div>
                         <Link
                             href={'/checkout'}
-                            className=' text-center bg-primary font-bold py-3 w-full text-white '
+                            className=' text-center bg-primary font-bold py-3 w-full px-2 text-white '
                         >
                             Thanh toán
                         </Link>
