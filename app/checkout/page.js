@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { Button } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { Button } from '@mui/material';
 
 const CheckoutPage = () => {
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [address, setAddress] = useState("");
-    const [note, setNote] = useState("");
-    const [error, setError] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
+    const [note, setNote] = useState('');
+    const [error, setError] = useState('');
 
     const session = useSession();
     const { status } = session;
@@ -20,6 +20,12 @@ const CheckoutPage = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [userData, setUserData] = useState();
 
+    const [showImage, setShowImage] = useState(false);
+
+    const handleRadioChange = (e) => {
+        setShowImage(!showImage);
+    };
+
     const fetchCartItems = async () => {
         try {
             const response = await fetch(`/api/cart-item/${userEmail}`);
@@ -27,18 +33,18 @@ const CheckoutPage = () => {
                 throw new Error(`HTTP error status: ${response.status}`);
             }
             const data = await response.json();
-            console.log("data", data);
+            console.log('data', data);
             setCartItems(data);
         } catch (error) {
-            console.error("Failed to fetch cart items:", error);
+            console.error('Failed to fetch cart items:', error);
         }
     };
 
     async function getUser(email) {
         try {
             const res = await fetch(`/api/users/${email}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
             });
 
             if (res.ok) {
@@ -47,13 +53,13 @@ const CheckoutPage = () => {
                 if (user) {
                     setUserData(user);
                 } else {
-                    console.error("User not found or response is empty.");
+                    console.error('User not found or response is empty.');
                 }
             } else {
-                console.error("Error fetching user:", res.statusText);
+                console.error('Error fetching user:', res.statusText);
             }
         } catch (error) {
-            console.error("Error in fetch:", error);
+            console.error('Error in fetch:', error);
         }
     }
 
@@ -89,9 +95,9 @@ const CheckoutPage = () => {
 
         // Kiểm tra số điện thoại
         if (!isVietnamesePhoneNumberValid(newPhoneNumber)) {
-            setError("Số điện thoại không hợp lệ.");
+            setError('Số điện thoại không hợp lệ.');
         } else {
-            setError("");
+            setError('');
         }
     };
 
@@ -107,14 +113,14 @@ const CheckoutPage = () => {
 
     async function handleCreateOrder() {
         if (!userData._id || !phoneNumber || !address) {
-            alert("Vui lòng nhập đầy đủ thông tin.");
+            alert('Vui lòng nhập đầy đủ thông tin.');
             return;
         }
 
         try {
             const res = await fetch(`/api/order`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     cartId: cartItems[0].cart_id,
                     userId: userData._id,
@@ -127,139 +133,139 @@ const CheckoutPage = () => {
             });
 
             if (!res.ok) {
-                console.log("fail to fetch post order");
+                console.log('fail to fetch post order');
                 throw new Error(`HTTP error status: ${res.status}`);
             } else {
                 const data = await res.json();
-                console.log("data", data);
-                window.location.href = "/checkout/success";
+                console.log('data', data);
+                window.location.href = '/checkout/success';
             }
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error('Error fetching data:', error);
         }
     }
 
     // check authenticated
-    if (status === "loading") {
-        return "Loading....";
+    if (status === 'loading') {
+        return 'Loading....';
     }
 
-    if (status === "unauthenticated") {
-        return redirect("/login");
+    if (status === 'unauthenticated') {
+        return redirect('/login');
     }
 
     return (
         <div>
             <div>
-                <div className="flex flex-col items-center  bg-white py-4 sm:flex-row px-14">
-                    <a href="#" className="text-2xl font-bold text-gray-800">
+                <div className='flex flex-col items-center  bg-white py-4 sm:flex-row px-14'>
+                    <a href='#' className='text-2xl font-bold text-gray-800'>
                         Thông tin vận chuyển
                     </a>
                 </div>
-                <div className="grid px-2 md:px-10 lg:grid-cols-2 ">
+                <div className='grid px-2 md:px-10 lg:grid-cols-2 '>
                     {/* Bên trái */}
-                    <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
-                        <p className="text-xl font-medium">
+                    <div className='mt-10 bg-gray-50 px-4 pt-8 lg:mt-0'>
+                        <p className='text-xl font-medium'>
                             Thông tin chi tiết
                         </p>
-                        <p className="text-gray-400">
+                        <p className='text-gray-400'>
                             Hoàn thành thông tin liên hệ của bạn
                         </p>
-                        <div className="">
+                        <div className=''>
                             <label
-                                for="email"
-                                className="mt-4 mb-2 block text-sm font-medium"
+                                for='email'
+                                className='mt-4 mb-2 block text-sm font-medium'
                             >
                                 Email
                             </label>
-                            <div className="relative">
+                            <div className='relative'>
                                 <input
-                                    type="text"
-                                    id="email"
-                                    name="email"
+                                    type='text'
+                                    id='email'
+                                    name='email'
                                     required
-                                    className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500"
+                                    className='w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500'
                                     value={session.data?.session.user.email}
                                     disabled={true}
                                 />
-                                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                    <i className="ri-mail-send-line"></i>
+                                <div className='pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3'>
+                                    <i className='ri-mail-send-line'></i>
                                 </div>
                             </div>
                             <label
-                                for="Username"
-                                className="mt-4 mb-2 block text-sm font-medium"
+                                for='Username'
+                                className='mt-4 mb-2 block text-sm font-medium'
                             >
                                 Họ và tên
                             </label>
-                            <div className="relative">
+                            <div className='relative'>
                                 <input
-                                    type="text"
-                                    id="Username"
-                                    name="Username"
+                                    type='text'
+                                    id='Username'
+                                    name='Username'
                                     required
-                                    className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500"
+                                    className='w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500'
                                     value={session.data?.session.user.name}
                                     disabled={true}
                                 />
-                                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                    <i className="ri-id-card-line"></i>
+                                <div className='pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3'>
+                                    <i className='ri-id-card-line'></i>
                                 </div>
                             </div>
 
                             <label
-                                for="UserPhone"
-                                className="mt-4 mb-2 block text-sm font-medium"
+                                for='UserPhone'
+                                className='mt-4 mb-2 block text-sm font-medium'
                             >
                                 Số điện thoại
                             </label>
-                            <div className="relative">
-                                <div className="">
+                            <div className='relative'>
+                                <div className=''>
                                     <input
-                                        id="UserPhone"
-                                        name="UserPhone"
-                                        list="phone-list"
+                                        id='UserPhone'
+                                        name='UserPhone'
+                                        list='phone-list'
                                         required
-                                        className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500"
+                                        className='w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500'
                                         onChange={handlePhoneNumberChange}
-                                        autocomplete="off"
+                                        autocomplete='off'
                                     />
 
-                                    <datalist id="phone-list">
+                                    <datalist id='phone-list'>
                                         <option value={userData?.phoneNumber} />
                                     </datalist>
 
-                                    <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                        <i className="ri-phone-line"></i>
+                                    <div className='pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3'>
+                                        <i className='ri-phone-line'></i>
                                     </div>
                                 </div>
                             </div>
                             {error && (
-                                <span className="text-red-500 text-xs mt-1">
+                                <span className='text-red-500 text-xs mt-1'>
                                     {error}
                                 </span>
                             )}
 
                             <label
-                                for="billing-address"
-                                className="mt-4 mb-2 block text-sm font-medium"
+                                for='billing-address'
+                                className='mt-4 mb-2 block text-sm font-medium'
                             >
                                 Địa chỉ giao hàng
                             </label>
-                            <div className="flex flex-col sm:flex-row">
-                                <div className="relative flex-shrink-0 w-full">
+                            <div className='flex flex-col sm:flex-row'>
+                                <div className='relative flex-shrink-0 w-full'>
                                     <input
-                                        type="text"
-                                        id="billing-address"
-                                        list="address-list"
-                                        name="billing-address"
+                                        type='text'
+                                        id='billing-address'
+                                        list='address-list'
+                                        name='billing-address'
                                         onChange={handleAddressChange}
                                         required
-                                        className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500"
-                                        autocomplete="off"
+                                        className='w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500'
+                                        autocomplete='off'
                                     />
 
-                                    <datalist id="address-list">
+                                    <datalist id='address-list'>
                                         {userData?.address.map((address) => (
                                             <option
                                                 key={address}
@@ -268,67 +274,67 @@ const CheckoutPage = () => {
                                         ))}
                                     </datalist>
 
-                                    <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                        <i class="ri-home-8-line"></i>
+                                    <div className='pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3'>
+                                        <i class='ri-home-8-line'></i>
                                     </div>
                                 </div>
                             </div>
                             <label
-                                for="billing-note"
-                                className="mt-4 mb-2 block text-sm font-medium"
+                                for='billing-note'
+                                className='mt-4 mb-2 block text-sm font-medium'
                             >
                                 Ghi chú
                             </label>
-                            <div className="flex flex-col sm:flex-row">
-                                <div className="relative flex-shrink-0 w-full">
+                            <div className='flex flex-col sm:flex-row'>
+                                <div className='relative flex-shrink-0 w-full'>
                                     <input
-                                        type="text"
-                                        id="billing-note"
-                                        name="billing-note"
+                                        type='text'
+                                        id='billing-note'
+                                        name='billing-note'
                                         onChange={handleNoteChange}
-                                        className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500"
-                                        placeholder="Ví dụ: Giao hàng giờ hành chính"
+                                        className='w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-gray-500 focus:ring-gray-500'
+                                        placeholder='Ví dụ: Giao hàng giờ hành chính'
                                     />
-                                    <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                        <i className="ri-sticky-note-line"></i>
+                                    <div className='pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3'>
+                                        <i className='ri-sticky-note-line'></i>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="mt-6 border-t border-b py-2">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-sm font-medium text-gray-900">
+                            <div className='mt-6 border-t border-b py-2'>
+                                <div className='flex items-center justify-between'>
+                                    <p className='text-sm font-medium text-gray-900'>
                                         Tạm tính
                                     </p>
-                                    <p className="font-semibold text-gray-900">
+                                    <p className='font-semibold text-gray-900'>
                                         {totalPrice.toLocaleString()}đ
                                     </p>
                                 </div>
-                                <div className="flex items-center justify-between">
-                                    <p className="text-sm font-medium text-gray-900">
+                                <div className='flex items-center justify-between'>
+                                    <p className='text-sm font-medium text-gray-900'>
                                         Phí giao hàng
                                     </p>
-                                    <p className="font-semibold text-gray-900">
+                                    <p className='font-semibold text-gray-900'>
                                         30.000 ₫
                                     </p>
                                 </div>
                             </div>
-                            <div className="mt-6 flex items-center justify-between">
-                                <p className="text-sm font-medium text-gray-900">
+                            <div className='mt-6 flex items-center justify-between'>
+                                <p className='text-sm font-medium text-gray-900'>
                                     Tổng
                                 </p>
-                                <p className="text-2xl font-semibold text-gray-900">
+                                <p className='text-2xl font-semibold text-gray-900'>
                                     {(totalPrice + 30000).toLocaleString()}đ
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex justify-center">
+                        <div className='flex justify-center'>
                             <button
                                 className={`w-full bg-primary text-center rounded-md mt-6 text-white py-3 font-bold ${
                                     error
-                                        ? "pointer-events-none bg-[#75a195]"
-                                        : ""
+                                        ? 'pointer-events-none bg-[#75a195]'
+                                        : ''
                                 }`}
                                 onClick={() => {
                                     handleCreateOrder();
@@ -340,57 +346,57 @@ const CheckoutPage = () => {
                     </div>
 
                     {/* Bên phải */}
-                    <div className="px-4 pt-8">
-                        <p className="text-xl font-medium">Tóm tắt đơn hàng</p>
-                        <p className="text-gray-400">
+                    <div className='px-4 pt-8'>
+                        <p className='text-xl font-medium'>Tóm tắt đơn hàng</p>
+                        <p className='text-gray-400'>
                             Hãy kiểm tra kỹ thông tin của đơn hàng
                         </p>
 
-                        <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+                        <div className='mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6'>
                             {cartItems.map((item) => (
-                                <div className="flex flex-col rounded-lg bg-white sm:flex-row">
+                                <div className='flex flex-col rounded-lg bg-white sm:flex-row'>
                                     <img
-                                        className="m-2 h-28 w-28 rounded-md border object-cover object-center"
+                                        className='m-2 h-28 w-28 rounded-md border object-cover object-center'
                                         src={
                                             item.product_item_id.product_id
                                                 .image[0]
                                         }
-                                        alt=""
+                                        alt=''
                                     />
-                                    <div className="flex w-full flex-col px-4 py-4 justify-between">
-                                        <span className="font-semibold text-sm">
+                                    <div className='flex w-full flex-col px-4 py-4 justify-between'>
+                                        <span className='font-semibold text-sm'>
                                             {
                                                 item.product_item_id.product_id
                                                     .name
                                             }
                                         </span>
-                                        <div className="flex gap-4 mt-3 items-center ">
-                                            <span className="float-right text-gray-400 text-sm">
+                                        <div className='flex gap-4 mt-3 items-center '>
+                                            <span className='float-right text-gray-400 text-sm'>
                                                 {
                                                     item.product_item_id
                                                         .color_id.name
-                                                }{" "}
-                                                /{" "}
+                                                }{' '}
+                                                /{' '}
                                                 {
                                                     item.product_item_id.size_id
                                                         .name
                                                 }
                                             </span>
-                                            <div className="flex items-center gap-0">
+                                            <div className='flex items-center gap-0'>
                                                 <input
-                                                    id="first_product"
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm block h-6 w-8  text-center appearance-none"
+                                                    id='first_product'
+                                                    className='bg-gray-50 border border-gray-300 text-gray-900 text-sm block h-6 w-8  text-center appearance-none'
                                                     required
                                                     disabled
                                                     value={item.item_quantity}
                                                 />
                                             </div>
                                         </div>
-                                        <p className="text-lg font-bold">
+                                        <p className='text-lg font-bold'>
                                             {(
                                                 item.product_item_id.price *
                                                 item.item_quantity
-                                            ).toLocaleString()}{" "}
+                                            ).toLocaleString()}{' '}
                                             đ
                                         </p>
                                     </div>
@@ -398,36 +404,78 @@ const CheckoutPage = () => {
                             ))}
                         </div>
 
-                        <p className="mt-8 text-lg font-medium">
+                        <p className='mt-8 text-lg font-medium'>
                             Phương thức thanh toán
                         </p>
-                        <form className="mt-5 grid gap-6">
-                            <div className="relative">
+                        <form className='mt-5 grid gap-2'>
+                            <div className='relative'>
                                 <input
-                                    className="peer hidden"
-                                    id="radio_1"
-                                    type="radio"
-                                    name="radio"
-                                    checked
+                                    className='peer hidden'
+                                    type='radio'
+                                    id='hideRadio'
+                                    name='imageToggle'
+                                    value='hide'
+                                    onChange={handleRadioChange}
+                                    checked={!showImage}
                                 />
-                                <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                                <span className='peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white'></span>
                                 <label
-                                    className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                                    for="radio_1"
+                                    className='peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4'
+                                    htmlFor='hideRadio'
                                 >
-                                    <div className="flex items-center">
-                                        <i className="ri-truck-line text-4xl text-primary"></i>
-
-                                        <div className="ml-5">
-                                            <span className="mt-2 font-semibold">
+                                    <div className='flex items-center'>
+                                        <i className='ri-truck-line text-4xl text-primary'></i>
+                                        <div className='ml-5'>
+                                            <span className='mt-2 font-semibold'>
                                                 COD
                                             </span>
-                                            <p className="text-slate-500 text-sm leading-6">
+                                            <p className='text-slate-500 text-sm leading-6'>
                                                 Thanh toán khi nhận hàng
                                             </p>
                                         </div>
                                     </div>
                                 </label>
+                            </div>
+                            <div className='relative'>
+                                <input
+                                    className='peer hidden'
+                                    type='radio'
+                                    id='showRadio'
+                                    name='imageToggle'
+                                    value='show'
+                                    onChange={handleRadioChange}
+                                    checked={showImage}
+                                />
+                                <span className='peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white'></span>
+                                <label
+                                    className='peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4'
+                                    htmlFor='showRadio'
+                                >
+                                    <div className='flex items-center'>
+                                        <i className='ri-wallet-3-line text-4xl text-primary'></i>
+                                        <div className='ml-5'>
+                                            <span className='mt-2 font-semibold'>
+                                                Online Payment
+                                            </span>
+                                            <p className='text-slate-500 text-sm leading-6'>
+                                                Thanh toán Online
+                                            </p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div>
+                                <div
+                                    className={`mt-4 ${
+                                        showImage ? 'block' : 'hidden'
+                                    }`}
+                                >
+                                    <img
+                                        src={'/qrmomo.jpg'}
+                                        className='w-full h-full mt-16'
+                                        alt='Flowbite Logo'
+                                    />
+                                </div>
                             </div>
                         </form>
                     </div>
