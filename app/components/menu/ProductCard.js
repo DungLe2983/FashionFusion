@@ -21,7 +21,7 @@ const ProductCard = ({
     return (
         <div className=' relative overflow-hidden group transition shadow-lg'>
             <div
-                className='max-w-xs rounded overflow-hidden  '
+                className=' rounded overflow-hidden '
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
