@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Thông tin kết nối MongoDB
-mongo_uri = "mongodb+srv://phamthanhdong:ftUecsR7LgGJjxl7@cluster0.w6pi9km.mongodb.net/fashionfusion"
+mongo_uri = "mongodb+srv://phamthanhdong:dong@cluster0.w6pi9km.mongodb.net/fashionfusion"
 db_name = "fashionfusion"
 collection_name = "products"
 
