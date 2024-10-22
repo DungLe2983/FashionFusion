@@ -198,7 +198,8 @@ const CheckoutPage = () => {
             });
 
             if (!res.ok) {
-                console.log("fail to fetch post order");
+                // console.log("fail to fetch post order", res);
+                toast.error("Mã khuyến mãi đã hết lượt sử dụng");
                 throw new Error(`HTTP error status: ${res.status}`);
             } else {
                 const data = await res.json();
