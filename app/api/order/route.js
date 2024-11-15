@@ -3,6 +3,7 @@ import Order from "../../models/order";
 import CartItem from "../../models/cart-item";
 import Cart from "../../models/cart";
 import OrderDetail from "../../models/order-detail";
+import Promotion from "../../models/promotion";
 
 export async function POST(req, res) {
     try {
@@ -21,9 +22,28 @@ export async function POST(req, res) {
             );
         }
 
+        //Promotion handle
+        let promo = null;
+
+        if (data.promotionCode && data.promotionCode.trim() !== "") {
+            promo = await Promotion.findOne({ code: data.promotionCode });
+
+            // Nếu tìm thấy mã khuyến mãi và còn lượt sử dụng, giảm số lượng
+            if (promo && promo.count > 0) {
+                promo.count -= 1;
+                await promo.save();
+            } else if (promo && promo.count <= 0) {
+                return NextResponse.json(
+                    { error: "Mã khuyến mãi đã hết lượt sử dụng" },
+                    { status: 400 }
+                );
+            }
+        }
+
         const newOrder = new Order({
             user_id: data.userId,
             detail_id: [],
+            promotion_id: promo ? promo._id : null,
             phone: data.phone,
             address: data.address,
             note: data.note,

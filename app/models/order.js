@@ -14,6 +14,10 @@ const OrderSchema = new Schema(
                 ref: "OrderDetail",
             },
         ],
+        promotion_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Promotion",
+        },
         phone: {
             type: String,
         },

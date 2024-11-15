@@ -1,0 +1,5 @@
+pymongo
+pandas
+scikit-learn
+flask
+flask-cors
