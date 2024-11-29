@@ -14,6 +14,13 @@ export default function ClientLayout({ children }) {
         {children}
         <Footer />
         <Toaster position="bottom-right" />
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+        <df-messenger
+          intent="WELCOME"
+          chat-title="FashionFushion"
+          agent-id="0058d451-d5ab-4986-8912-face9b8e1e29"
+          language-code="vi"
+        ></df-messenger>
       </AppProvider>
     </RecoilRoot>
   );
