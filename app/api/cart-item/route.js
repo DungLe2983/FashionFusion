@@ -177,11 +177,11 @@ export async function PUT(req, res) {
 }
 
 export async function GET(req, res) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
+
   try {
     await dbConnect();
-
-    const url = new URL(req.url);
-    const id = url.searchParams.get("id");
 
     const item = await CartItem.findById(id).populate("product_item_id");
 

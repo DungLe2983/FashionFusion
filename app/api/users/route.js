@@ -1,24 +1,24 @@
-import User from '../../models/User';
-import dbConnect from '../../utils/db';
-import { NextResponse } from 'next/server';
+import User from "../../models/User";
+import dbConnect from "../../utils/db";
+import { NextResponse } from "next/server";
 
 export async function GET(req, context) {
-    try {
-        await dbConnect();
+  const url = new URL(req.url);
+  const email = url.searchParams.get("email");
 
-        const url = new URL(req.url);
-        const email = url.searchParams.get('email');
+  try {
+    await dbConnect();
 
-        let user;
+    let user;
 
-        if (email) {
-            user = await User.find({ email: email });
-        } else {
-            user = await User.find();
-        }
-
-        return NextResponse.json(user);
-    } catch (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    if (email) {
+      user = await User.find({ email: email });
+    } else {
+      user = await User.find();
     }
+
+    return NextResponse.json(user);
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
